@@ -63,12 +63,13 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 .tg .on.expense{background:var(--co);color:#fff}.tg .on.income{background:var(--md);color:#fff}
 .go,.cp{width:100%;padding:14px;border-radius:14px;border:0;background:var(--pr);color:#fff;font-weight:700;font-size:15px;margin-top:6px}
 .cp{background:var(--in);color:var(--ink);border:1.5px solid var(--ln);margin-top:8px;font-size:13px;padding:10px}
+.ib.on{background:var(--pr);color:#fff}.tg .on.pri{background:var(--pr);color:#fff}.er{color:var(--c2);font-size:13px;margin:4px 0 8px;min-height:20px}
 .nt{font-size:12.5px;color:var(--mu);line-height:1.9;margin:6px 0}
 </style>
 </head>
 <body>
 <div class="w">
-  <div class="hd"><h1>دفتر دخل و خرج</h1><button class="ib" id="bkb" data-a="bk" aria-label="پشتیبان‌گیری"></button></div>
+  <div class="hd"><h1>دفتر دخل و خرج</h1><button class="ib" id="acb" data-a="ac" aria-label="حساب کاربری"></button><button class="ib" id="bkb" data-a="bk" aria-label="پشتیبان‌گیری"></button></div>
   <div class="card mn"><div class="lb" id="lb"></div><div class="ps" id="ps"></div></div>
   <div class="st" id="st"></div>
   <div class="card" id="ls"></div>
@@ -89,17 +90,19 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
   <button class="go" data-a="sv">ثبت در دفتر</button>
 </div></div>
 
+<div class="ov2" id="ac"><div class="sh"><div class="sht"><h2>حساب کاربری</h2><button class="x" data-a="cl"></button></div><div id="acv"></div></div></div>
+
 <div class="ov2" id="bk"><div class="sh">
   <div class="sht"><h2>پشتیبان‌گیری و بازیابی</h2><button class="x" data-a="cl"></button></div>
   <p class="nt">نصب روی آیفون: در Safari دکمه Share ← Add to Home Screen. اگه از نسخه‌ی قبلی داده داری، متن پشتیبانش رو پایین جای‌گذاری کن.</p>
   <p class="nt" id="of">حالت آفلاین: در حال بررسی…</p>
-  <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۳</p>
+  <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۴</p>
   <div class="fl"><label>پشتیبان فعلی</label><textarea id="bo" rows="4" readonly></textarea><button class="cp" data-a="cp">کپی متن پشتیبان</button></div>
   <div class="fl"><label>بازیابی از پشتیبان</label><textarea id="bi" rows="4" placeholder="متن پشتیبان رو اینجا جای‌گذاری کن..."></textarea><button class="go" data-a="rs">بازیابی و جایگزینی دفتر فعلی</button><div class="nt" id="bm"></div></div>
 </div></div>
 
 <script>
-const ICONS={"Utensils":[["path",{"d":"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"}],["path",{"d":"M7 2v20"}],["path",{"d":"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"}]],"Bus":[["path",{"d":"M8 6v6"}],["path",{"d":"M15 6v6"}],["path",{"d":"M2 12h19.6"}],["path",{"d":"M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"}],["circle",{"cx":"7","cy":"18","r":"2"}],["path",{"d":"M9 18h5"}],["circle",{"cx":"16","cy":"18","r":"2"}]],"Home":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}],["path",{"d":"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"}]],"House":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}],["path",{"d":"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"}]],"Receipt":[["path",{"d":"M12 17V7"}],["path",{"d":"M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"}],["path",{"d":"M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"}]],"ShoppingBag":[["path",{"d":"M16 10a4 4 0 0 1-8 0"}],["path",{"d":"M3.103 6.034h17.794"}],["path",{"d":"M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"}]],"HeartPulse":[["path",{"d":"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"}],["path",{"d":"M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"}]],"Ticket":[["path",{"d":"M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"}],["path",{"d":"M13 5v2"}],["path",{"d":"M13 17v2"}],["path",{"d":"M13 11v2"}]],"GraduationCap":[["path",{"d":"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"}],["path",{"d":"M22 10v6"}],["path",{"d":"M6 12.5V16a6 3 0 0 0 12 0v-3.5"}]],"MoreHorizontal":[["circle",{"cx":"12","cy":"12","r":"1"}],["circle",{"cx":"19","cy":"12","r":"1"}],["circle",{"cx":"5","cy":"12","r":"1"}]],"Ellipsis":[["circle",{"cx":"12","cy":"12","r":"1"}],["circle",{"cx":"19","cy":"12","r":"1"}],["circle",{"cx":"5","cy":"12","r":"1"}]],"Tag":[["path",{"d":"M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"}],["circle",{"cx":"7.5","cy":"7.5","r":".5","fill":"currentColor"}]],"Trash2":[["path",{"d":"M10 11v6"}],["path",{"d":"M14 11v6"}],["path",{"d":"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"}],["path",{"d":"M3 6h18"}],["path",{"d":"M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"}]],"Save":[["path",{"d":"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"}],["path",{"d":"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"}],["path",{"d":"M7 3v4a1 1 0 0 0 1 1h7"}]],"Plus":[["path",{"d":"M5 12h14"}],["path",{"d":"M12 5v14"}]],"FolderPlus":[["path",{"d":"M12 10v6"}],["path",{"d":"M9 13h6"}],["path",{"d":"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"}]],"X":[["path",{"d":"M18 6 6 18"}],["path",{"d":"m6 6 12 12"}]],"ArrowDown":[["path",{"d":"M12 5v14"}],["path",{"d":"m19 12-7 7-7-7"}]],"ArrowUp":[["path",{"d":"m5 12 7-7 7 7"}],["path",{"d":"M12 19V5"}]],"Wallet":[["path",{"d":"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"}],["path",{"d":"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"}]],"Briefcase":[["path",{"d":"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"}],["rect",{"width":"20","height":"14","x":"2","y":"6","rx":"2"}]],"TrendingUp":[["path",{"d":"M16 7h6v6"}],["path",{"d":"m22 7-8.5 8.5-5-5L2 17"}]],"Gift":[["path",{"d":"M12 7v14"}],["path",{"d":"M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"}],["path",{"d":"M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5"}],["rect",{"x":"3","y":"7","width":"18","height":"4","rx":"1"}]]};
+const ICONS={"Utensils":[["path",{"d":"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"}],["path",{"d":"M7 2v20"}],["path",{"d":"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"}]],"Bus":[["path",{"d":"M8 6v6"}],["path",{"d":"M15 6v6"}],["path",{"d":"M2 12h19.6"}],["path",{"d":"M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"}],["circle",{"cx":"7","cy":"18","r":"2"}],["path",{"d":"M9 18h5"}],["circle",{"cx":"16","cy":"18","r":"2"}]],"Home":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}],["path",{"d":"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"}]],"House":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}],["path",{"d":"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"}]],"Receipt":[["path",{"d":"M12 17V7"}],["path",{"d":"M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"}],["path",{"d":"M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"}]],"ShoppingBag":[["path",{"d":"M16 10a4 4 0 0 1-8 0"}],["path",{"d":"M3.103 6.034h17.794"}],["path",{"d":"M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"}]],"HeartPulse":[["path",{"d":"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"}],["path",{"d":"M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"}]],"Ticket":[["path",{"d":"M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"}],["path",{"d":"M13 5v2"}],["path",{"d":"M13 17v2"}],["path",{"d":"M13 11v2"}]],"GraduationCap":[["path",{"d":"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"}],["path",{"d":"M22 10v6"}],["path",{"d":"M6 12.5V16a6 3 0 0 0 12 0v-3.5"}]],"MoreHorizontal":[["circle",{"cx":"12","cy":"12","r":"1"}],["circle",{"cx":"19","cy":"12","r":"1"}],["circle",{"cx":"5","cy":"12","r":"1"}]],"Ellipsis":[["circle",{"cx":"12","cy":"12","r":"1"}],["circle",{"cx":"19","cy":"12","r":"1"}],["circle",{"cx":"5","cy":"12","r":"1"}]],"Tag":[["path",{"d":"M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"}],["circle",{"cx":"7.5","cy":"7.5","r":".5","fill":"currentColor"}]],"Trash2":[["path",{"d":"M10 11v6"}],["path",{"d":"M14 11v6"}],["path",{"d":"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"}],["path",{"d":"M3 6h18"}],["path",{"d":"M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"}]],"Save":[["path",{"d":"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"}],["path",{"d":"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"}],["path",{"d":"M7 3v4a1 1 0 0 0 1 1h7"}]],"Plus":[["path",{"d":"M5 12h14"}],["path",{"d":"M12 5v14"}]],"FolderPlus":[["path",{"d":"M12 10v6"}],["path",{"d":"M9 13h6"}],["path",{"d":"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"}]],"X":[["path",{"d":"M18 6 6 18"}],["path",{"d":"m6 6 12 12"}]],"ArrowDown":[["path",{"d":"M12 5v14"}],["path",{"d":"m19 12-7 7-7-7"}]],"ArrowUp":[["path",{"d":"m5 12 7-7 7 7"}],["path",{"d":"M12 19V5"}]],"Wallet":[["path",{"d":"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"}],["path",{"d":"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"}]],"Briefcase":[["path",{"d":"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"}],["rect",{"width":"20","height":"14","x":"2","y":"6","rx":"2"}]],"TrendingUp":[["path",{"d":"M16 7h6v6"}],["path",{"d":"m22 7-8.5 8.5-5-5L2 17"}]],"Gift":[["path",{"d":"M12 7v14"}],["path",{"d":"M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"}],["path",{"d":"M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5"}],["rect",{"x":"3","y":"7","width":"18","height":"4","rx":"1"}]],"User":[["path",{"d":"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"}],["circle",{"cx":"12","cy":"7","r":"4"}]]};
 const K='ledger-v1',$=s=>document.querySelector(s),fa=n=>Number(n||0).toLocaleString('fa-IR'),pn=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]),nd=s=>s.replace(/[٠-٩۰-۹]/g,c=>c.charCodeAt(0)&15);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
@@ -117,9 +120,34 @@ const p2=n=>String(n).padStart(2,'0'),j2i=(y,m,d)=>{const g=j2g(y,m,d);return g[
 const gu=y=>{const g=j2g(y,1,1);return Date.UTC(g[0],g[1]-1,g[2])},dim=(y,m)=>m<7?31:m<12?30:Math.round((gu(y+1)-gu(y))/864e5)-336;
 const N=new Date(),T=g2j(N.getFullYear(),N.getMonth()+1,N.getDate());let cy=T[0],cm=T[1],ty='expense';
 /* داده */
-const norm=s=>({transactions:s.transactions||[],categories:{expense:(s.categories&&s.categories.expense)||[],income:(s.categories&&s.categories.income)||[]},t:s.t||0});
-let S=norm({}),cloud=null;try{const r=JSON.parse(localStorage.getItem(K));if(r&&r.transactions)S=norm(r)}catch(e){}
-function save(){S.t=Date.now();try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}if(cloud)cloud.set({j:JSON.stringify(S)}).catch(()=>{})}
+const norm=s=>({transactions:s.transactions||[],categories:{expense:(s.categories&&s.categories.expense)||[],income:(s.categories&&s.categories.income)||[]},deleted:s.deleted||{},t:s.t||0});
+let S=norm({});try{const r=JSON.parse(localStorage.getItem(K));if(r&&r.transactions)S=norm(r)}catch(e){}
+const API='https://ledger-api.sadrasedaghat511.workers.dev',AK='ledger-auth';
+let A=null,busy=false,tm=null,amode='login',smsg='',av='';try{A=JSON.parse(localStorage.getItem(AK))}catch(e){}
+function merge(a,b){const del=Object.assign({},a.deleted,b.deleted),m=new Map(),u=(x,y)=>[...new Set([...x,...y])];[...a.transactions,...b.transactions].forEach(t=>{if(!del[t.id]&&!m.has(t.id))m.set(t.id,t)});return{transactions:[...m.values()],categories:{expense:u(a.categories.expense,b.categories.expense),income:u(a.categories.income,b.categories.income)},deleted:del,t:Math.max(a.t,b.t)}}
+const sig=s=>JSON.stringify([s.transactions.map(t=>t.id).sort(),[...s.categories.expense].sort(),[...s.categories.income].sort(),Object.keys(s.deleted).sort()]);
+function save(){S.t=Date.now();try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}if(A){clearTimeout(tm);tm=setTimeout(sync,1500)}}
+async function api(m,p,b){const r=await fetch(API+p,{method:m,cache:'no-store',headers:Object.assign({'content-type':'application/json'},A?{authorization:'Bearer '+A.t}:{}),body:b?JSON.stringify(b):undefined});const j=await r.json().catch(()=>({}));j.s=r.status;return j}
+async function sync(){if(!A||busy)return;busy=true;smsg='در حال هماهنگ‌سازی…';acView();
+try{for(let i=0;i<3;i++){const g=await api('GET','/data');if(g.s==401){A=null;localStorage.removeItem(AK);smsg='نشست منقضی شد؛ دوباره وارد شو.';return}if(g.s!=200)throw 0;
+const srv=g.d?norm(JSON.parse(g.d)):null;if(srv)S=merge(S,srv);if(srv&&sig(S)==sig(srv)){break}
+const r=await api('PUT','/data',{d:JSON.stringify(S),r:g.r});if(r.s==200)break;if(r.s!=409||i==2)throw 0}
+S.t=Date.now();try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}render();smsg='هماهنگ شد ✓ '+new Date().toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}
+catch(e){smsg='هماهنگ نشد؛ اینترنت رو چک کن و دوباره امتحان کن.'}
+finally{busy=false;acView()}}
+const ER={bad:'نام کاربری یا رمز معتبر نیست.',invite:'کد دعوت اشتباهه.',exists:'این نام کاربری قبلاً گرفته شده.',cred:'نام کاربری یا رمز اشتباهه.',locked:'چند بار اشتباه زدی؛ ۱۰ دقیقه صبر کن.'};
+async function dk(u,p){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(p),'PBKDF2',false,['deriveBits']),b=await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode('ledger.v1:'+u),iterations:150000,hash:'SHA-256'},k,256);return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function acView(){const v=$('#acv');if(!v)return;$('#acb').classList.toggle('on',!!A);
+if(A){v.innerHTML=`<p class="nt">وارد شده‌ای با نام کاربری <b dir="ltr">${esc(A.u)}</b>.<br>${esc(smsg)}</p><button class="go" data-a="sy">هماهنگ‌سازی حالا</button><button class="cp" data-a="lo">خروج از حساب</button><p class="nt">با خروج، داده‌ها روی همین گوشی و روی سرور می‌مونن.</p>`;return}
+v.innerHTML=`<div class="tg"><button class="${amode=='login'?'on pri':''}" data-a="am" data-v="login">ورود</button><button class="${amode=='signup'?'on pri':''}" data-a="am" data-v="signup">ثبت‌نام</button></div><div class="fl"><label>نام کاربری (حروف انگلیسی، عدد و _ . -)</label><input id="au" dir="ltr" autocapitalize="none" autocomplete="username" value="${esc(av)}"></div><div class="fl"><label>رمز عبور</label><input id="ap" type="password" dir="ltr" autocomplete="${amode=='login'?'current-password':'new-password'}"></div>${amode=='signup'?'<div class="fl"><label>کد دعوت</label><input id="ai" dir="ltr" autocapitalize="none"></div>':''}<div class="er" id="ae">${esc(smsg)}</div><button class="go" data-a="ao">${amode=='login'?'ورود':'ساخت حساب'}</button><p class="nt">رمز فراموش‌شده بازیابی نداره؛ حتماً یادت بمونه. بدون حساب هم می‌تونی از اپ استفاده کنی.</p>`}
+async function authGo(){const u=$('#au').value.trim().toLowerCase(),p=$('#ap').value,e=$('#ae'),go=document.querySelector('#acv .go');
+if(!/^[a-z0-9_.-]{3,32}$/.test(u)){e.textContent='نام کاربری باید ۳ تا ۳۲ حرف انگلیسی، عدد یا _ . - باشه.';return}
+if(p.length<6){e.textContent='رمز حداقل ۶ کاراکتر باشه.';return}
+go.disabled=true;e.textContent='لطفاً صبر کن…';
+try{const k=await dk(u,p),r=await api('POST','/'+amode,{u,p:k,i:amode=='signup'?$('#ai').value.trim():undefined});
+if(r.s==200){A={t:r.t,u:r.u};localStorage.setItem(AK,JSON.stringify(A));smsg='';acView();sync()}else{e.textContent=ER[r.e]||'خطایی پیش اومد؛ دوباره امتحان کن.';go.disabled=false}}
+catch(x){e.textContent='ارتباط با سرور برقرار نشد.';go.disabled=false}}
+async function logout(){try{await api('POST','/logout')}catch(e){}A=null;localStorage.removeItem(AK);smsg='';acView()}
 /* نمودار */
 function pie(it,tot){const cx=170,y0=150,r1=36,r2=56,P=(r,a)=>[cx+r*Math.cos(a),y0+r*Math.sin(a)];let a=-Math.PI/2,p='',l='';
 it.forEach(x=>{const sw=x.v/tot*2*Math.PI,g=it.length>1?.035:0,a0=a+g,a1=Math.min(a+sw-g,a0+6.28),L=a1-a0>Math.PI?1:0,[x1,y1]=P(r2,a0),[x2,y2]=P(r2,a1),[x3,y3]=P(r1,a1),[x4,y4]=P(r1,a0);
@@ -156,7 +184,7 @@ document.addEventListener('click',e=>{
 if(e.target.classList.contains('ov2'))return cl();
 const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
 if(a=='mo'){cy=+b.dataset.y;cm=+b.dataset.m;mark(1);render()}
-else if(a=='del'){S.transactions=S.transactions.filter(t=>t.id!=b.dataset.id);save();render()}
+else if(a=='del'){const id=b.dataset.id;S.transactions=S.transactions.filter(t=>t.id!=id);S.deleted[id]=Date.now();save();render()}
 else if(a=='open')openF();
 else if(a=='cl')cl();
 else if(a=='ty'){ty=b.dataset.v;document.querySelectorAll('.tg button').forEach(x=>x.classList.toggle('on',x==b));fillCat()}
@@ -165,12 +193,17 @@ else if(a=='ac'){const n=$('#nn').value.trim();if(!n)return;const base=ty=='expe
 else if(a=='sv')submit();
 else if(a=='bk'){$('#bo').value=JSON.stringify({transactions:S.transactions,categories:S.categories});$('#bm').textContent='';$('#bk').classList.add('on')}
 else if(a=='cp'){navigator.clipboard.writeText($('#bo').value).then(()=>$('#bm').textContent='کپی شد.',()=>{$('#bo').select();$('#bm').textContent='متن انتخاب شد؛ دستی کپی کن.'})}
+else if(a=='ac'){acView();$('#ac').classList.add('on')}
+else if(a=='am'){av=($('#au')||{}).value||'';amode=b.dataset.v;smsg='';acView()}
+else if(a=='ao')authGo();
+else if(a=='sy')sync();
+else if(a=='lo')logout();
 else if(a=='rs'){try{const p=JSON.parse($('#bi').value);if(!Array.isArray(p.transactions))throw 0;S=norm(p);save();render();$('#bi').value='';$('#bm').textContent='بازیابی انجام شد.'}catch(x){$('#bm').textContent='فرمت متن پشتیبان درست نیست.'}}
 });
 /* راه‌اندازی */
-$('#bkb').innerHTML=ic(['Save'],18,'currentColor');$('#fab').innerHTML=ic(['Plus'],18,'#fff')+' افزودن تراکنش';$('#ncb').innerHTML=ic(['FolderPlus'],18,'currentColor');
+$('#bkb').innerHTML=ic(['Save'],18,'currentColor');$('#acb').innerHTML=ic(['User'],18,'currentColor');$('#fab').innerHTML=ic(['Plus'],18,'#fff')+' افزودن تراکنش';$('#ncb').innerHTML=ic(['FolderPlus'],18,'currentColor');
 document.querySelectorAll('.x[data-a=cl]').forEach(b=>b.innerHTML=ic(['X'],20,'currentColor'));
-pills();mark(0);render();
+pills();mark(0);render();acView();if(A)sync();addEventListener('online',()=>sync());document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
 if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));navigator.serviceWorker.ready.then(()=>{$('#of').textContent='حالت آفلاین: آماده ✓'});setTimeout(()=>{if(!/آماده/.test($('#of').textContent))$('#of').textContent='حالت آفلاین: هنوز فعال نشده (یک بار با اینترنت باز کن و دوباره امتحان کن)'},5000)}else $('#of').textContent='حالت آفلاین: این مرورگر پشتیبانی نمی‌کنه';
 </script>
 </body>
