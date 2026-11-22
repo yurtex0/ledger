@@ -96,7 +96,8 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
   <div class="sht"><h2>پشتیبان‌گیری و بازیابی</h2><button class="x" data-a="cl"></button></div>
   <p class="nt">نصب روی آیفون: در Safari دکمه Share ← Add to Home Screen. اگه از نسخه‌ی قبلی داده داری، متن پشتیبانش رو پایین جای‌گذاری کن.</p>
   <p class="nt" id="of">حالت آفلاین: در حال بررسی…</p>
-  <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۵</p>
+  <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۶</p>
+  <button class="cp" data-a="up">به‌روزرسانی اپ (بدون حذف داده‌ها)</button>
   <div class="fl"><label>پشتیبان فعلی</label><textarea id="bo" rows="4" readonly></textarea><button class="cp" data-a="cp">کپی متن پشتیبان</button></div>
   <div class="fl"><label>بازیابی از پشتیبان</label><textarea id="bi" rows="4" placeholder="متن پشتیبان رو اینجا جای‌گذاری کن..."></textarea><button class="go" data-a="rs">بازیابی و جایگزینی دفتر فعلی</button><div class="nt" id="bm"></div></div>
 </div></div>
@@ -198,13 +199,14 @@ else if(a=='am'){av=($('#au')||{}).value||'';amode=b.dataset.v;smsg='';acView()}
 else if(a=='ao')authGo();
 else if(a=='sy')sync();
 else if(a=='lo')logout();
+else if(a=='up'){const f=()=>location.reload();if(!navigator.serviceWorker||!window.caches)return f();caches.keys().then(k=>Promise.all(k.map(x=>caches.delete(x)))).then(()=>navigator.serviceWorker.getRegistrations()).then(r=>Promise.all(r.map(x=>x.unregister()))).then(f,f)}
 else if(a=='rs'){try{const p=JSON.parse($('#bi').value);if(!Array.isArray(p.transactions))throw 0;S=norm(p);save();render();$('#bi').value='';$('#bm').textContent='بازیابی انجام شد.'}catch(x){$('#bm').textContent='فرمت متن پشتیبان درست نیست.'}}
 });
 /* راه‌اندازی */
 $('#bkb').innerHTML=ic(['Save'],18,'currentColor');$('#acb').innerHTML=ic(['User'],18,'currentColor');$('#fab').innerHTML=ic(['Plus'],18,'#fff')+' افزودن تراکنش';$('#ncb').innerHTML=ic(['FolderPlus'],18,'currentColor');
 document.querySelectorAll('.x[data-a=cl]').forEach(b=>b.innerHTML=ic(['X'],20,'currentColor'));
-pills();mark(0);render();acView();if(A)sync();addEventListener('online',()=>sync());document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));navigator.serviceWorker.ready.then(()=>{$('#of').textContent='حالت آفلاین: آماده ✓'});setTimeout(()=>{if(!/آماده/.test($('#of').textContent))$('#of').textContent='حالت آفلاین: هنوز فعال نشده (یک بار با اینترنت باز کن و دوباره امتحان کن)'},5000)}else $('#of').textContent='حالت آفلاین: این مرورگر پشتیبانی نمی‌کنه';
+pills();mark(0);render();acView();if(A)sync();addEventListener('online',()=>sync());document.addEventListener('visibilitychange',()=>{if(!document.hidden){sync();if(navigator.serviceWorker)navigator.serviceWorker.getRegistration().then(r=>r&&r.update().catch(()=>{}))}});
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));navigator.serviceWorker.ready.then(r=>{$('#of').textContent='حالت آفلاین: آماده ✓';r.update().catch(()=>{})});setTimeout(()=>{if(!/آماده/.test($('#of').textContent))$('#of').textContent='حالت آفلاین: هنوز فعال نشده (یک بار با اینترنت باز کن و دوباره امتحان کن)'},5000)}else $('#of').textContent='حالت آفلاین: این مرورگر پشتیبانی نمی‌کنه';
 </script>
 </body>
 </html>
