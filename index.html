@@ -69,7 +69,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 </head>
 <body>
 <div class="w">
-  <div class="hd"><h1>دفتر دخل و خرج</h1><button class="ib" id="acb" data-a="ac" aria-label="حساب کاربری"></button><button class="ib" id="bkb" data-a="bk" aria-label="پشتیبان‌گیری"></button></div>
+  <div class="hd"><h1>دفتر دخل و خرج</h1><button class="ib" id="acb" data-a="acct" aria-label="حساب کاربری"></button><button class="ib" id="bkb" data-a="bk" aria-label="پشتیبان‌گیری"></button></div>
   <div class="card mn"><div class="lb" id="lb"></div><div class="ps" id="ps"></div></div>
   <div class="st" id="st"></div>
   <div class="card" id="ls"></div>
@@ -96,7 +96,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
   <div class="sht"><h2>پشتیبان‌گیری و بازیابی</h2><button class="x" data-a="cl"></button></div>
   <p class="nt">نصب روی آیفون: در Safari دکمه Share ← Add to Home Screen. اگه از نسخه‌ی قبلی داده داری، متن پشتیبانش رو پایین جای‌گذاری کن.</p>
   <p class="nt" id="of">حالت آفلاین: در حال بررسی…</p>
-  <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۴</p>
+  <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۵</p>
   <div class="fl"><label>پشتیبان فعلی</label><textarea id="bo" rows="4" readonly></textarea><button class="cp" data-a="cp">کپی متن پشتیبان</button></div>
   <div class="fl"><label>بازیابی از پشتیبان</label><textarea id="bi" rows="4" placeholder="متن پشتیبان رو اینجا جای‌گذاری کن..."></textarea><button class="go" data-a="rs">بازیابی و جایگزینی دفتر فعلی</button><div class="nt" id="bm"></div></div>
 </div></div>
@@ -193,7 +193,7 @@ else if(a=='ac'){const n=$('#nn').value.trim();if(!n)return;const base=ty=='expe
 else if(a=='sv')submit();
 else if(a=='bk'){$('#bo').value=JSON.stringify({transactions:S.transactions,categories:S.categories});$('#bm').textContent='';$('#bk').classList.add('on')}
 else if(a=='cp'){navigator.clipboard.writeText($('#bo').value).then(()=>$('#bm').textContent='کپی شد.',()=>{$('#bo').select();$('#bm').textContent='متن انتخاب شد؛ دستی کپی کن.'})}
-else if(a=='ac'){acView();$('#ac').classList.add('on')}
+else if(a=='acct'){acView();$('#ac').classList.add('on')}
 else if(a=='am'){av=($('#au')||{}).value||'';amode=b.dataset.v;smsg='';acView()}
 else if(a=='ao')authGo();
 else if(a=='sy')sync();
