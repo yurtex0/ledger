@@ -69,6 +69,11 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 .sb{display:inline-block;font-size:12px;margin-top:2px;padding:2px 10px;border-radius:999px;background:var(--bg);color:var(--mu)}.sb.ok{color:var(--md)}.sb.pd{background:rgba(229,160,59,.18);color:#B7791F}.sb.of{background:var(--ln)}.sb.sy{color:var(--pr)}
 .cr[data-a]{cursor:pointer;border-radius:10px;padding:5px 6px;margin:0 -6px 5px}.cr[data-a]:active{background:var(--bg)}.cr[data-a] .t b::after{content:"‹";margin-inline-start:8px;color:var(--mu);font-weight:400}
 .sec{background:var(--bg);border-radius:16px;padding:14px;margin-bottom:12px}.sec h3{margin:0 0 8px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}.sec h3 i{display:flex;color:var(--pr)}details{margin-top:8px}summary{cursor:pointer;font-size:13px;color:var(--pr);padding:6px 0;font-weight:600}details textarea{margin-top:6px}
+.ys{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;padding:2px 2px 8px}.ys::-webkit-scrollbar{display:none}
+.yb{flex:none;scroll-snap-align:center;border:0;background:none;color:var(--mu);font-weight:600;font-size:13px;padding:5px 13px;border-radius:999px}
+.yb.on{background:var(--ink);color:var(--bg)}
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.mg .p{width:100%;padding:12px 0;text-align:center;font-size:14px}
+.p.now::after,.yb.now::after{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.55;margin-inline-start:6px;vertical-align:middle}
 .nt{font-size:12.5px;color:var(--mu);line-height:1.9;margin:6px 0}
 </style>
 </head>
@@ -76,7 +81,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 <div id="gate"><div class="gw"><h1>دفتر دخل و خرج</h1><p class="nt">برای دیدن و ثبت داده‌هات وارد شو یا ثبت‌نام کن. داده‌ها فقط بعد از ورود نمایش داده می‌شن.</p><div id="gv"></div></div></div>
 <div class="w">
   <div class="hd"><div style="flex:1;min-width:0"><h1>دفتر دخل و خرج</h1><span id="sb" class="sb" hidden></span></div><button class="ib" id="acb" data-a="acct" aria-label="تنظیمات"></button></div>
-  <div class="card mn"><div class="lb" id="lb"></div><div class="ps" id="ps"></div></div>
+  <div class="mn"><div class="lb" id="lb"></div><div class="ys" id="ys"></div><div class="mg" id="ps"></div></div>
   <div class="st" id="st"></div>
   <div class="card" id="ls"></div>
   <div class="card cs" id="cs"></div>
@@ -108,7 +113,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
   </div>
   <div class="sec"><h3><i data-i="Info"></i>درباره‌ی اپ</h3>
     <p class="nt" id="of" style="margin-top:0">حالت آفلاین: در حال بررسی…</p>
-    <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۱۱</p>
+    <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۱۲</p>
     <button class="cp" data-a="up" style="margin-top:0">به‌روزرسانی اپ (بدون حذف داده‌ها)</button>
     <p class="nt">نصب روی آیفون: در Safari دکمه Share ← Add to Home Screen.</p>
   </div>
@@ -209,8 +214,10 @@ if(cv)catView();
 function catView(){if(!cv||!A)return;const key=cy*12+cm,c=col(cv.n);
 const L=S.transactions.filter(t=>t.type=='expense'&&t.category==cv.n&&(cv.all||(j=>j[0]*12+j[1]==key)(i2j(t.date)))).sort((a,b)=>b.date.localeCompare(a.date)),tot=L.reduce((s,t)=>s+t.amount,0);
 $('#cvb').innerHTML=`<div class="sht"><h2 style="display:flex;align-items:center;gap:8px"><i class="bd" style="width:28px;height:28px;background:${c}">${catIc(cv.n,16,'#fff')}</i>${esc(cv.n)}</h2><button class="x" data-a="cl">${ic(['X'],20,'currentColor')}</button></div><div class="tg"><button class="${cv.all?'':'on pri'}" data-a="cm" data-v="0">${MN[cm-1]} ${pn(cy)}</button><button class="${cv.all?'on pri':''}" data-a="cm" data-v="1">همه‌ی ماه‌ها</button></div><p class="nt" style="margin:0 0 6px">${pn(L.length)} تراکنش · جمع ${fa(tot)} تومان</p>${L.length?`<div class="rows" style="padding:0">${L.map(t=>{const j=i2j(t.date);return`<div class="r"><div class="rm"><b>${esc(t.description)}</b><small>${pn(j[2])} ${MN[j[1]-1]} ${pn(j[0])}</small></div><div class="am expense">−${fa(t.amount)}</div><button class="x" data-a="del" data-id="${esc(t.id)}" aria-label="حذف">${ic(['Trash2'],16,'currentColor')}</button></div>`}).join('')}</div>`:'<div class="em">تراکنشی نیست.</div>'}`}
-function pills(){const a=[];for(let i=-36;i<=12;i++){const t=T[0]*12+T[1]-1+i,y=Math.floor(t/12),mm=t-y*12+1;a.push(`<button class="p" data-a="mo" data-y="${y}" data-m="${mm}">${MN[mm-1]}${mm==1?' '+pn(y):''}</button>`)}$('#ps').innerHTML=a.join('')}
-function mark(sm){document.querySelectorAll('.p').forEach(b=>{const on=b.dataset.y==cy&&b.dataset.m==cm;b.classList.toggle('on',on);if(on)b.scrollIntoView({inline:'center',block:'nearest',behavior:sm?'smooth':'auto'})})}
+function pills(){const ys=[];for(let y=T[0]-10;y<=T[0]+1;y++)ys.push(`<button class="yb" data-a="yr" data-y="${y}">${pn(y)}</button>`);$('#ys').innerHTML=ys.join('');
+$('#ps').innerHTML=MN.map((m,i)=>`<button class="p" data-a="mo" data-m="${i+1}">${m}</button>`).join('')}
+function mark(sm){document.querySelectorAll('.yb').forEach(b=>{const on=b.dataset.y==cy;b.classList.toggle('on',on);b.classList.toggle('now',b.dataset.y==T[0]);if(on)b.scrollIntoView({inline:'center',block:'nearest',behavior:sm?'smooth':'auto'})});
+document.querySelectorAll('.p').forEach(b=>{b.classList.toggle('on',b.dataset.m==cm);b.classList.toggle('now',cy==T[0]&&b.dataset.m==T[1])})}
 /* فرم */
 const opts=()=>ty=='expense'?EC.concat(S.categories.expense):IN.concat(S.categories.income);
 function fillCat(v){$('#ct').innerHTML=opts().map(c=>`<option>${esc(c)}</option>`).join('');if(v)$('#ct').value=v}
@@ -225,7 +232,8 @@ $('#dy').addEventListener('change',()=>days());$('#dm').addEventListener('change
 document.addEventListener('click',e=>{
 if(e.target.classList.contains('ov2'))return cl();
 const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;if(!A&&a!='am'&&a!='ao')return;
-if(a=='mo'){cy=+b.dataset.y;cm=+b.dataset.m;mark(1);render()}
+if(a=='mo'){cm=+b.dataset.m;mark(1);render()}
+else if(a=='yr'){cy=+b.dataset.y;mark(1);render()}
 else if(a=='del'){const id=b.dataset.id;S.transactions=S.transactions.filter(t=>t.id!=id);S.deleted[id]=Date.now();save();render()}
 else if(a=='open')openF();
 else if(a=='cl')cl();
