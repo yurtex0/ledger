@@ -97,6 +97,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 
 <div class="ov2" id="sh"><div class="sh">
   <div class="sht"><h2 id="shh">تراکنش جدید</h2><button class="x" data-a="cl"></button></div>
+  <details id="smd"><summary>پر کردن از پیامک بانک</summary><textarea id="sms" rows="3" placeholder="متن پیامک بانک رو اینجا بچسبون"></textarea><div class="nt" id="smm"></div></details>
   <div class="tg"><button class="expense on" data-a="ty" data-v="expense">خرج</button><button class="income" data-a="ty" data-v="income">درآمد</button></div>
   <div class="fl"><label>مبلغ (تومان)</label><input id="am" inputmode="numeric" placeholder="مثلاً ۲۵۰٬۰۰۰" autocomplete="off"></div>
   <div class="fl"><label>توضیحات (اختیاری)</label><input id="ds" placeholder="مثلاً ناهار با دوستان"></div>
@@ -121,7 +122,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
   </div>
   <div class="sec"><h3><i data-i="Info"></i>درباره‌ی اپ</h3>
     <p class="nt" id="of" style="margin-top:0">حالت آفلاین: در حال بررسی…</p>
-    <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۱۹</p>
+    <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۲۰</p>
     <button class="cp" data-a="up" style="margin-top:0">به‌روزرسانی اپ (بدون حذف داده‌ها)</button>
     <p class="nt">نصب روی آیفون: در Safari دکمه Share ← Add to Home Screen.</p>
   </div>
@@ -253,11 +254,26 @@ function openF(t){ed=t?t.id:null;const j=t?i2j(t.date):T;ty=t?t.type:'expense';d
 if(t){if(![...$('#ct').options].some(o=>o.value==t.category))$('#ct').insertAdjacentHTML('beforeend','<option>'+esc(t.category)+'</option>');$('#ct').value=t.category}
 const y0=Math.min(T[0]-10,j[0]),y1=Math.max(T[0]+1,j[0]);
 $('#dy').innerHTML=Array.from({length:y1-y0+1},(_,i)=>y0+i).map(y=>`<option value="${y}">${pn(y)}</option>`).join('');$('#dm').innerHTML=MN.map((m,i)=>`<option value="${i+1}">${m}</option>`).join('');$('#dy').value=j[0];$('#dm').value=j[1];days(j[2]);
-$('#shh').textContent=t?'ویرایش تراکنش':'تراکنش جدید';$('#svb').textContent=t?'ذخیره تغییرات':'ثبت در دفتر';$('#sh').classList.add('on')}
+$('#smd').hidden=!!t;$('#smd').open=false;$('#sms').value='';$('#smm').textContent='';$('#shh').textContent=t?'ویرایش تراکنش':'تراکنش جدید';$('#svb').textContent=t?'ذخیره تغییرات':'ثبت در دفتر';$('#sh').classList.add('on')}
 const cl=()=>{cv=null;ed=null;document.querySelectorAll('.ov2').forEach(o=>o.classList.remove('on'))};
 function submit(){const am=+nd($('#am').value).replace(/\D/g,'');if(!am){$('#am').focus();return}const c=$('#ct').value,y=+$('#dy').value,m=+$('#dm').value,d=+$('#dd').value;
 const o={type:ty,amount:am,description:$('#ds').value.trim()||c,category:c,date:j2i(y,m,d)},et=ed&&S.transactions.find(x=>x.id==ed);if(et){Object.assign(et,o);et.u=Date.now()}else S.transactions.push(Object.assign({id:Date.now()+'-'+Math.random().toString(36).slice(2,8)},o));save();cy=y;cm=m;mark(1);render();cl()}
 $('#am').addEventListener('input',e=>{const r=nd(e.target.value).replace(/\D/g,'');e.target.value=r?Number(r).toLocaleString('fa-IR'):''});
+function parseSms(raw){const t=nd(raw);let type=null;
+const mi=t.search(/واریز|نشست|دریافت|افزایش/),me=t.search(/برداشت|پرید|خرید|پرداخت|کسر|کاهش|انتقال/);
+if(mi>=0&&(me<0||mi<me))type='income';else if(me>=0)type='expense';
+const dre=/(\d{4})[.\/\-](\d{1,2})[.\/\-](\d{1,2})/,dm=t.match(dre);let date=null;
+if(dm){const y=+dm[1],m=+dm[2],d=+dm[3];if(y>=1300&&y<=1500&&m>=1&&m<=12&&d>=1&&d<=31)date=[y,m,d]}
+let w=t.replace(dre,' ').replace(/\d{1,2}:\d{2}(:\d{2})?/g,' ').replace(/(موجودی|مانده)[^\d]{0,12}\d[\d,٬،]*(\s*(ریال|تومان))?/g,' ');
+const m=w.match(/(\d[\d,٬،]*)\s*(ریال|تومان)/)||w.match(/(\d{1,3}(?:[,٬،]\d{3})+|\d{4,})/);
+let amount=0,unit='ریال';if(m){const v=+m[1].replace(/\D/g,'');unit=m[2]||'ریال';amount=unit=='ریال'?Math.round(v/10):v}
+return{type,amount,date,unit}}
+$('#sms').addEventListener('input',()=>{const v=$('#sms').value.trim(),e=$('#smm');if(!v){e.textContent='';return}
+const r=parseSms(v);if(!r.amount){e.textContent='مبلغ رو پیدا نکردم؛ دستی وارد کن.';return}
+if(r.type){ty=r.type;document.querySelectorAll('#sh .tg button').forEach(x=>x.classList.toggle('on',x.dataset.v==ty));fillCat()}
+$('#am').value=r.amount.toLocaleString('fa-IR');
+if(r.date){const[y,mo,d]=r.date;if(![...$('#dy').options].some(o=>o.value==y))$('#dy').insertAdjacentHTML('beforeend',`<option value="${y}">${pn(y)}</option>`);$('#dy').value=y;$('#dm').value=mo;days(d)}
+e.textContent=(r.type?(r.type=='income'?'درآمد':'خرج'):'نوع تشخیص داده نشد')+' · '+fa(r.amount)+' تومان'+(r.unit=='ریال'?' (پیامک ریال بود، تبدیل شد)':'')+(r.date?' · '+pn(r.date[2])+' '+MN[r.date[1]-1]+' '+pn(r.date[0]):' · تاریخ پیدا نشد، امروز گذاشته شد')+'. دسته رو انتخاب و ثبت کن.'});
 $('#dy').addEventListener('change',()=>days());$('#dm').addEventListener('change',()=>days());
 document.addEventListener('click',e=>{
 if(e.target.classList.contains('ov2'))return cl();
