@@ -28,7 +28,7 @@ button{font-family:inherit;cursor:pointer;transition:transform .12s}button:activ
 .ib{border:0;background:var(--cd);box-shadow:var(--sh);color:var(--pr);border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;padding:0}
 .card{background:var(--cd);border-radius:20px;box-shadow:var(--sh)}
 .mn{margin-bottom:14px;display:flex;align-items:center;gap:8px}.mn .lb{display:none}
-.mn{flex-wrap:wrap}#ps{flex:1 1 0;border-radius:24px;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 30px,#000 calc(100% - 30px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 30px,#000 calc(100% - 30px),transparent 100%)}
+.mn{flex-wrap:wrap}#ps{flex:1 1 0;border-radius:24px}
 .dv{flex:none;width:1px;height:26px;margin-bottom:4px;background:linear-gradient(to bottom,transparent,var(--mu),transparent);opacity:.55}
 #ys svg{transition:transform .25s}#ys.open svg{transform:rotate(180deg)}#ys{flex:none;padding-bottom:4px}#ys .p{display:flex;align-items:center;gap:6px}#yl{flex:0 0 100%;display:flex;flex-wrap:wrap;gap:6px;overflow:hidden;max-height:0;padding:0 2px;margin-top:-8px;opacity:0;pointer-events:none;transition:max-height .3s ease,opacity .22s ease,margin .3s ease,padding .3s ease}#yl.open{max-height:130px;padding:2px 2px 6px;margin-top:0;opacity:1;pointer-events:auto}
 #ptr{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-130px);background:var(--cd);color:var(--mu);box-shadow:var(--sh);border-radius:999px;padding:7px 16px;font-size:13px;z-index:20;transition:transform .2s;pointer-events:none;white-space:nowrap}
@@ -80,6 +80,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 .mg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.mg .p{width:100%;padding:12px 0;text-align:center;font-size:14px}
 .p.now::after,.yb.now::after{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.55;margin-inline-start:6px;vertical-align:middle}
 .sg{display:flex;gap:6px;margin:8px 0;background:var(--bg);padding:4px;border-radius:14px}.sg button{flex:1;padding:10px;border-radius:11px;border:0;background:none;color:var(--mu);font-weight:700;font-size:14px}.sg button.on{background:var(--pr);color:#fff}
+.r[data-a=ed]{cursor:pointer}.r[data-a=ed]:active{background:var(--bg)}
 .nt{font-size:12.5px;color:var(--mu);line-height:1.9;margin:6px 0}
 </style>
 </head>
@@ -95,7 +96,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 <button class="fab" id="fab" data-a="open"></button>
 
 <div class="ov2" id="sh"><div class="sh">
-  <div class="sht"><h2>تراکنش جدید</h2><button class="x" data-a="cl"></button></div>
+  <div class="sht"><h2 id="shh">تراکنش جدید</h2><button class="x" data-a="cl"></button></div>
   <div class="tg"><button class="expense on" data-a="ty" data-v="expense">خرج</button><button class="income" data-a="ty" data-v="income">درآمد</button></div>
   <div class="fl"><label>مبلغ (تومان)</label><input id="am" inputmode="numeric" placeholder="مثلاً ۲۵۰٬۰۰۰" autocomplete="off"></div>
   <div class="fl"><label>توضیحات (اختیاری)</label><input id="ds" placeholder="مثلاً ناهار با دوستان"></div>
@@ -104,7 +105,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
     <div class="row" id="r2" hidden style="margin-top:6px"><input id="nn" placeholder="نام دسته جدید"><button class="ib" data-a="ac">✓</button></div>
   </div>
   <div class="fl"><label>تاریخ</label><div class="row"><select id="dd"></select><select id="dm"></select><select id="dy"></select></div></div>
-  <button class="go" data-a="sv">ثبت در دفتر</button>
+  <button class="go" data-a="sv" id="svb">ثبت در دفتر</button>
 </div></div>
 
 <div class="ov2" id="ac"><div class="sh">
@@ -120,7 +121,7 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
   </div>
   <div class="sec"><h3><i data-i="Info"></i>درباره‌ی اپ</h3>
     <p class="nt" id="of" style="margin-top:0">حالت آفلاین: در حال بررسی…</p>
-    <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۱۷</p>
+    <p class="nt" style="margin-top:0">نسخه‌ی اپ: ۱۹</p>
     <button class="cp" data-a="up" style="margin-top:0">به‌روزرسانی اپ (بدون حذف داده‌ها)</button>
     <p class="nt">نصب روی آیفون: در Safari دکمه Share ← Add to Home Screen.</p>
   </div>
@@ -145,7 +146,7 @@ function g2j(gy,gm,gd){const m=[0,31,59,90,120,151,181,212,243,273,304,334],y2=g
 function j2g(jy,jm,jd){jy+=1595;let d=-355668+365*jy+(jy/33|0)*8+(((jy%33)+3)/4|0)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186),gy=400*(d/146097|0);d%=146097;if(d>36524){gy+=100*(--d/36524|0);d%=36524;if(d>=365)d++}gy+=4*(d/1461|0);d%=1461;if(d>365){gy+=(d-1)/365|0;d=(d-1)%365}let gd=d+1;const a=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31];let gm=0;for(;gm<13;gm++){if(gd<=a[gm])break;gd-=a[gm]}return[gy,gm,gd]}
 const p2=n=>String(n).padStart(2,'0'),j2i=(y,m,d)=>{const g=j2g(y,m,d);return g[0]+'-'+p2(g[1])+'-'+p2(g[2])},i2j=s=>{const[a,b,c]=s.split('-').map(Number);return g2j(a,b,c)};
 const gu=y=>{const g=j2g(y,1,1);return Date.UTC(g[0],g[1]-1,g[2])},dim=(y,m)=>m<7?31:m<12?30:Math.round((gu(y+1)-gu(y))/864e5)-336;
-const N=new Date(),T=g2j(N.getFullYear(),N.getMonth()+1,N.getDate());let cy=T[0],cm=T[1],ty='expense';
+const N=new Date(),T=g2j(N.getFullYear(),N.getMonth()+1,N.getDate());let cy=T[0],cm=T[1],ty='expense',ed=null;
 /* داده */
 const API='https://ledger-api.sadrasedaghat511.workers.dev',AK='ledger-acc',SK='ledger-s';
 const lg=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},ls=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},ld=k=>{try{localStorage.removeItem(k)}catch(e){}};
@@ -157,8 +158,8 @@ const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(
 const sha=async s=>hex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s))),rnd=()=>hex(crypto.getRandomValues(new Uint8Array(16)));
 function openUser(u,keep,t){A={u,t,keep};S=norm(lg(dkey(u))||{});pend=+lg(pkey(u))||0;ls(SK,{u,keep})}
 (function(){const ss=lg(SK);if(!ss||!ss.u||!ACC[ss.u])return;let ok=ss.keep!==false;try{if(sessionStorage.getItem('ledger-live'))ok=true}catch(e){}if(ok){openUser(ss.u,ss.keep!==false,ACC[ss.u].t||null);try{sessionStorage.setItem('ledger-live','1')}catch(e){}}})();
-function merge(a,b){const del=Object.assign({},a.deleted,b.deleted),m=new Map(),u=(x,y)=>[...new Set([...x,...y])];[...a.transactions,...b.transactions].forEach(t=>{if(!del[t.id]&&!m.has(t.id))m.set(t.id,t)});return{transactions:[...m.values()],categories:{expense:u(a.categories.expense,b.categories.expense),income:u(a.categories.income,b.categories.income)},deleted:del,t:Math.max(a.t,b.t)}}
-const sig=s=>JSON.stringify([s.transactions.map(t=>t.id).sort(),[...s.categories.expense].sort(),[...s.categories.income].sort(),Object.keys(s.deleted).sort()]);
+function merge(a,b){const del=Object.assign({},a.deleted,b.deleted),m=new Map(),u=(x,y)=>[...new Set([...x,...y])];[...a.transactions,...b.transactions].forEach(t=>{if(del[t.id])return;const x=m.get(t.id);if(!x||(t.u||0)>(x.u||0))m.set(t.id,t)});return{transactions:[...m.values()],categories:{expense:u(a.categories.expense,b.categories.expense),income:u(a.categories.income,b.categories.income)},deleted:del,t:Math.max(a.t,b.t)}}
+const sig=s=>JSON.stringify([s.transactions.map(t=>t.id+':'+(t.u||0)).sort(),[...s.categories.expense].sort(),[...s.categories.income].sort(),Object.keys(s.deleted).sort()]);
 function save(){S.t=Date.now();ls(dkey(A.u),S);pend++;ls(pkey(A.u),pend);setStat();clearTimeout(tm);tm=setTimeout(sync,1500)}
 async function api(m,p,b,tok){const c=new AbortController(),t=setTimeout(()=>c.abort(),8000),k=tok||(A&&A.t);try{const r=await fetch(API+p,{method:m,cache:'no-store',signal:c.signal,headers:Object.assign({'content-type':'application/json'},k?{authorization:'Bearer '+k}:{}),body:b?JSON.stringify(b):undefined});const j=await r.json().catch(()=>({}));j.s=r.status;return j}catch(e){return{s:0}}finally{clearTimeout(t)}}
 async function relogin(){if(!curK||!A)return false;const r=await api('POST','/login',{u:A.u,p:curK});if(r.s==200){A.t=r.t;if(ACC[A.u]){ACC[A.u].t=r.t;ls(AK,ACC)}return true}return false}
@@ -227,7 +228,7 @@ const sm=k=>m.filter(t=>t.type==k).reduce((s,t)=>s+t.amount,0),inc=sm('income'),
 const key=cy*12+cm;let car=0;S.transactions.forEach(t=>{const j=i2j(t.date);if(j[0]*12+j[1]<key)car+=t.type=='income'?t.amount:-t.amount});const bal=car+net;
 $('#lb').textContent=MN[cm-1]+' '+pn(cy);
 $('#st').innerHTML=`<div class="hero"><div class="hl">مانده این ماه · ${MN[cm-1]} ${pn(cy)}</div><div class="hn"><span>${fa(bal)}</span><small>تومان</small></div>${car?`<div class="hc">شامل ${fa(car)} تومان مانده از ماه قبل</div>`:''}<div class="hr"><div class="chip"><i class="ci g">${ic(['ArrowDown'],16,'currentColor')}</i><div><small>درآمد</small><b>${fa(inc)}</b></div></div><div class="chip"><i class="ci r">${ic(['ArrowUp'],16,'currentColor')}</i><div><small>خرج</small><b>${fa(exp)}</b></div></div></div></div>`;
-$('#ls').innerHTML=m.length?`<div class="rows">${m.map(t=>{const c=col(t.category);return`<div class="r"><div class="tile" style="background:${c}1F;color:${c}">${catIc(t.category,21,'currentColor')}</div><div class="rm"><b>${esc(t.description)}</b><small>${esc(t.category)} · ${pn(i2j(t.date)[2])} ${MN[cm-1]}</small></div><div class="am ${t.type}">${t.type=='expense'?'−':'+'}${fa(t.amount)}</div><button class="x" data-a="del" data-id="${esc(t.id)}" aria-label="حذف">${ic(['Trash2'],16,'currentColor')}</button></div>`}).join('')}</div><div class="tt">${car?`<div><span>مانده از ماه قبل</span><span>${fa(car)} تومان</span></div>`:''}<div><span>جمع درآمد</span><span>${fa(inc)} تومان</span></div><div><span>جمع خرج</span><span>${fa(exp)} تومان</span></div><div class="f"><span>مانده نهایی</span><span>${fa(bal)} تومان</span></div></div>`:`<div class="em">هنوز تراکنشی برای این ماه ثبت نشده.<br>با دکمه‌ی پایین اولین مورد رو اضافه کن.</div>`;
+$('#ls').innerHTML=m.length?`<div class="rows">${m.map(t=>{const c=col(t.category);return`<div class="r" data-a="ed" data-id="${esc(t.id)}"><div class="tile" style="background:${c}1F;color:${c}">${catIc(t.category,21,'currentColor')}</div><div class="rm"><b>${esc(t.description)}</b><small>${esc(t.category)} · ${pn(i2j(t.date)[2])} ${MN[cm-1]}</small></div><div class="am ${t.type}">${t.type=='expense'?'−':'+'}${fa(t.amount)}</div><button class="x" data-a="del" data-id="${esc(t.id)}" aria-label="حذف">${ic(['Trash2'],16,'currentColor')}</button></div>`}).join('')}</div><div class="tt">${car?`<div><span>مانده از ماه قبل</span><span>${fa(car)} تومان</span></div>`:''}<div><span>جمع درآمد</span><span>${fa(inc)} تومان</span></div><div><span>جمع خرج</span><span>${fa(exp)} تومان</span></div><div class="f"><span>مانده نهایی</span><span>${fa(bal)} تومان</span></div></div>`:`<div class="em">هنوز تراکنشی برای این ماه ثبت نشده.<br>با دکمه‌ی پایین اولین مورد رو اضافه کن.</div>`;
 const cs={};m.filter(t=>t.type=='expense').forEach(t=>cs[t.category]=(cs[t.category]||0)+t.amount);
 const it=Object.entries(cs).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({n,v,c:col(n)}));
 $('#cs').hidden=!it.length;
@@ -248,11 +249,14 @@ document.querySelectorAll('#ps .p').forEach(b=>{const on=b.dataset.m==cm;b.class
 const opts=()=>ty=='expense'?EC.concat(S.categories.expense):IN.concat(S.categories.income);
 function fillCat(v){$('#ct').innerHTML=opts().map(c=>`<option>${esc(c)}</option>`).join('');if(v)$('#ct').value=v}
 function days(v){const o=v||+$('#dd').value||1,n=dim(+$('#dy').value,+$('#dm').value);$('#dd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${pn(i+1)}</option>`).join('');$('#dd').value=Math.min(o,n)}
-function openF(){ty='expense';document.querySelectorAll('.tg button').forEach((x,i)=>x.classList.toggle('on',!i));$('#am').value='';$('#ds').value='';$('#r2').hidden=true;fillCat();
-$('#dy').innerHTML=Array.from({length:12},(_,i)=>T[0]-10+i).map(y=>`<option value="${y}">${pn(y)}</option>`).join('');$('#dm').innerHTML=MN.map((m,i)=>`<option value="${i+1}">${m}</option>`).join('');$('#dy').value=T[0];$('#dm').value=T[1];days(T[2]);$('#sh').classList.add('on')}
-const cl=()=>{cv=null;document.querySelectorAll('.ov2').forEach(o=>o.classList.remove('on'))};
+function openF(t){ed=t?t.id:null;const j=t?i2j(t.date):T;ty=t?t.type:'expense';document.querySelectorAll('#sh .tg button').forEach(x=>x.classList.toggle('on',x.dataset.v==ty));$('#am').value=t?Number(t.amount).toLocaleString('fa-IR'):'';$('#ds').value=t?t.description:'';$('#r2').hidden=true;fillCat();
+if(t){if(![...$('#ct').options].some(o=>o.value==t.category))$('#ct').insertAdjacentHTML('beforeend','<option>'+esc(t.category)+'</option>');$('#ct').value=t.category}
+const y0=Math.min(T[0]-10,j[0]),y1=Math.max(T[0]+1,j[0]);
+$('#dy').innerHTML=Array.from({length:y1-y0+1},(_,i)=>y0+i).map(y=>`<option value="${y}">${pn(y)}</option>`).join('');$('#dm').innerHTML=MN.map((m,i)=>`<option value="${i+1}">${m}</option>`).join('');$('#dy').value=j[0];$('#dm').value=j[1];days(j[2]);
+$('#shh').textContent=t?'ویرایش تراکنش':'تراکنش جدید';$('#svb').textContent=t?'ذخیره تغییرات':'ثبت در دفتر';$('#sh').classList.add('on')}
+const cl=()=>{cv=null;ed=null;document.querySelectorAll('.ov2').forEach(o=>o.classList.remove('on'))};
 function submit(){const am=+nd($('#am').value).replace(/\D/g,'');if(!am){$('#am').focus();return}const c=$('#ct').value,y=+$('#dy').value,m=+$('#dm').value,d=+$('#dd').value;
-S.transactions.push({id:Date.now()+'-'+Math.random().toString(36).slice(2,8),type:ty,amount:am,description:$('#ds').value.trim()||c,category:c,date:j2i(y,m,d)});save();cy=y;cm=m;mark(1);render();cl()}
+const o={type:ty,amount:am,description:$('#ds').value.trim()||c,category:c,date:j2i(y,m,d)},et=ed&&S.transactions.find(x=>x.id==ed);if(et){Object.assign(et,o);et.u=Date.now()}else S.transactions.push(Object.assign({id:Date.now()+'-'+Math.random().toString(36).slice(2,8)},o));save();cy=y;cm=m;mark(1);render();cl()}
 $('#am').addEventListener('input',e=>{const r=nd(e.target.value).replace(/\D/g,'');e.target.value=r?Number(r).toLocaleString('fa-IR'):''});
 $('#dy').addEventListener('change',()=>days());$('#dm').addEventListener('change',()=>days());
 document.addEventListener('click',e=>{
@@ -263,6 +267,7 @@ else if(a=='yr'){cy=+b.dataset.y;yc();mark(1);render()}
 else if(a=='yo'){const o=$('#yl').classList.toggle('open');$('#ys').classList.toggle('open',o)}
 else if(a=='del'){const id=b.dataset.id;S.transactions=S.transactions.filter(t=>t.id!=id);S.deleted[id]=Date.now();save();render()}
 else if(a=='open')openF();
+else if(a=='ed'){const t=S.transactions.find(x=>x.id==b.dataset.id);if(t)openF(t)}
 else if(a=='cl')cl();
 else if(a=='ty'){ty=b.dataset.v;document.querySelectorAll('.tg button').forEach(x=>x.classList.toggle('on',x==b));fillCat()}
 else if(a=='nc'){$('#r2').hidden=!$('#r2').hidden;if(!$('#r2').hidden)$('#nn').focus()}
