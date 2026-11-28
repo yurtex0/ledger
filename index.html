@@ -2,14 +2,14 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<title>دفتر دخل و خرج</title>
+<title>dakhl</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="دفتر">
+<meta name="apple-mobile-web-app-title" content="dakhl">
 <meta name="theme-color" content="#F3F5F9">
-<script>try{var t=localStorage.getItem("ledger-theme");if(t=="light"||t=="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>try{var t=localStorage.getItem("ledger-theme");if(t=="light"||t=="dark")document.documentElement.dataset.theme=t;if(localStorage.getItem("ledger-lang")=="en"){document.documentElement.lang="en";document.documentElement.dir="ltr"}}catch(e){}</script>
 <style>@font-face{font-family:Vazirmatn;src:url(Vazirmatn.woff2) format('woff2');font-weight:100 900;font-display:swap}</style>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -29,7 +29,7 @@ button{font-family:inherit;cursor:pointer;transition:transform .12s}button:activ
 .card{background:var(--cd);border-radius:20px;box-shadow:var(--sh)}
 .mn{margin-bottom:14px;display:flex;align-items:center;gap:8px}.mn .lb{display:none}
 .mn{flex-wrap:wrap}#ps{flex:1 1 0;border-radius:24px}
-.dv{flex:none;width:1px;height:26px;margin-bottom:4px;background:linear-gradient(to bottom,transparent,var(--mu),transparent);opacity:.55}
+.dv{flex:none;align-self:stretch;width:1px;margin:3px 0 7px;background:var(--mu);opacity:.35}
 #ys svg{transition:transform .25s}#ys.open svg{transform:rotate(180deg)}#ys{flex:none;padding-bottom:4px}#ys .p{display:flex;align-items:center;gap:6px}#yl{flex:0 0 100%;display:flex;flex-wrap:wrap;gap:6px;overflow:hidden;max-height:0;padding:0 2px;margin-top:-8px;opacity:0;pointer-events:none;transition:max-height .3s ease,opacity .22s ease,margin .3s ease,padding .3s ease}#yl.open{max-height:130px;padding:2px 2px 6px;margin-top:0;opacity:1;pointer-events:auto}
 #ptr{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:var(--cd);box-shadow:var(--sh);display:flex;align-items:center;justify-content:center;z-index:20;opacity:0;pointer-events:none}#ptr svg{display:block}#ptr.sp svg{animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
 .ps{flex:1;min-width:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;padding:2px 2px 6px}.ps::-webkit-scrollbar{display:none}
@@ -81,14 +81,14 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 .p.now::after,.yb.now::after{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.55;margin-inline-start:6px;vertical-align:middle}
 .sg{display:flex;gap:6px;margin:8px 0;background:var(--bg);padding:4px;border-radius:14px}.sg button{flex:1;padding:10px;border-radius:11px;border:0;background:none;color:var(--mu);font-weight:700;font-size:14px}.sg button.on{background:var(--pr);color:#fff}
 .r[data-a=ed]{cursor:pointer}.r[data-a=ed]:active{background:var(--bg)}
-#sms{direction:rtl;text-align:right;font-size:14px}
+#sms{direction:inherit;text-align:start;font-size:14px}[dir=ltr] .cr[data-a] .t b::after{content:"›"}
 .nt{font-size:12.5px;color:var(--mu);line-height:1.9;margin:6px 0}
 </style>
 </head>
 <body class="locked">
-<div id="gate"><div class="gw"><h1>دفتر دخل و خرج</h1><p class="nt">برای دیدن و ثبت داده‌هات وارد شو یا ثبت‌نام کن. داده‌ها فقط بعد از ورود نمایش داده می‌شن.</p><div id="gv"></div></div></div>
+<div id="gate"><div class="gw"><div class="sg" style="margin:0 0 18px"><button data-a="lg" data-v="fa">فارسی</button><button data-a="lg" data-v="en">English</button></div><h1>dakhl</h1><p class="nt" data-t="intro"></p><div id="gv"></div></div></div>
 <div class="w">
-  <div class="hd"><div style="flex:1;min-width:0"><h1>دفتر دخل و خرج</h1><span id="sb" class="sb" hidden></span></div><button class="ib" id="acb" data-a="acct" aria-label="تنظیمات"></button></div>
+  <div class="hd"><div style="flex:1;min-width:0"><h1>dakhl</h1><span id="sb" class="sb" hidden></span></div><button class="ib" id="acb" data-a="acct" aria-label="تنظیمات"></button></div>
   <div class="mn"><div class="lb" id="lb"></div><div class="ps" id="ps"></div><i class="dv"></i><div id="ys"></div><div id="yl"></div></div>
   <div class="st" id="st"></div>
   <div class="card" id="ls"></div>
@@ -98,34 +98,35 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 
 <div class="ov2" id="sh"><div class="sh">
   <div class="sht"><h2 id="shh">تراکنش جدید</h2><button class="x" data-a="cl"></button></div>
-  <details id="smd"><summary>پر کردن از پیامک بانک</summary><textarea id="sms" rows="3" placeholder="متن پیامک بانک رو اینجا بچسبون"></textarea><div class="nt" id="smm"></div></details>
-  <div class="tg"><button class="expense on" data-a="ty" data-v="expense">خرج</button><button class="income" data-a="ty" data-v="income">درآمد</button></div>
-  <div class="fl"><label>مبلغ (تومان)</label><input id="am" inputmode="numeric" placeholder="مثلاً ۲۵۰٬۰۰۰" autocomplete="off"></div>
-  <div class="fl"><label>توضیحات (اختیاری)</label><input id="ds" placeholder="مثلاً ناهار با دوستان"></div>
-  <div class="fl"><label>دسته‌بندی</label>
+  <details id="smd"><summary data-t="smsSum">x</summary><textarea id="sms" rows="3" data-ph="smsPh"></textarea><div class="nt" id="smm"></div></details>
+  <div class="tg"><button class="expense on" data-a="ty" data-v="expense" data-t="expense">خرج</button><button class="income" data-a="ty" data-v="income" data-t="income">درآمد</button></div>
+  <div class="fl"><label data-t="amtLbl">x</label><input id="am" inputmode="numeric" data-ph="amPh" autocomplete="off"></div>
+  <div class="fl"><label data-t="descLbl">x</label><input id="ds" data-ph="dsPh"></div>
+  <div class="fl"><label data-t="catLbl">x</label>
     <div class="row"><select id="ct"></select><button class="ib" id="ncb" data-a="nc"></button></div>
-    <div class="row" id="r2" hidden style="margin-top:6px"><input id="nn" placeholder="نام دسته جدید"><button class="ib" data-a="ac">✓</button></div>
+    <div class="row" id="r2" hidden style="margin-top:6px"><input id="nn" data-ph="nnPh"><button class="ib" data-a="ac">✓</button></div>
   </div>
-  <div class="fl"><label>تاریخ</label><div class="row"><select id="dd"></select><select id="dm"></select><select id="dy"></select></div></div>
+  <div class="fl"><label data-t="dateLbl">x</label><div class="row"><select id="dd"></select><select id="dm"></select><select id="dy"></select></div></div>
   <button class="go" data-a="sv" id="svb">ثبت در دفتر</button>
 </div></div>
 
 <div class="ov2" id="ac"><div class="sh">
-  <div class="sht"><h2>تنظیمات</h2><button class="x" data-a="cl"></button></div>
-  <div class="sec"><h3>ظاهر اپ</h3><div class="sg"><button data-a="th" data-v="auto">خودکار</button><button data-a="th" data-v="light">روز</button><button data-a="th" data-v="dark">شب</button></div><p class="nt" style="margin-top:0">«خودکار» از حالت روز/شب خود گوشی پیروی می‌کنه.</p></div>
-  <div class="sec"><h3><i data-i="User"></i>حساب کاربری</h3><div id="acv"></div></div>
-  <div class="sec"><h3><i data-i="Save"></i>پشتیبان‌گیری و بازیابی</h3>
-    <p class="nt" style="margin-top:0">یه نسخه از همه‌ی تراکنش‌هات رو کپی کن و یه جای امن نگه دار. هر وقت لازم شد از همون برمی‌گردونی.</p>
-    <button class="cp" data-a="cp" style="margin-top:0">کپی متن پشتیبان</button>
-    <details id="bd1"><summary>نمایش متن پشتیبان</summary><textarea id="bo" rows="4" readonly></textarea></details>
-    <details><summary>بازیابی از پشتیبان</summary><textarea id="bi" rows="4" placeholder="متن پشتیبان رو اینجا جای‌گذاری کن..."></textarea><button class="go" data-a="rs">بازیابی (اضافه به دفتر فعلی)</button></details>
+  <div class="sht"><h2 data-t="settings">x</h2><button class="x" data-a="cl"></button></div>
+  <div class="sec"><h3 data-t="langH">x</h3><div class="sg"><button data-a="lg" data-v="fa">فارسی</button><button data-a="lg" data-v="en">English</button></div></div>
+  <div class="sec"><h3 data-t="appear">x</h3><div class="sg"><button data-a="th" data-v="auto" data-t="thAuto">x</button><button data-a="th" data-v="light" data-t="thLight">x</button><button data-a="th" data-v="dark" data-t="thDark">x</button></div><p class="nt" style="margin-top:0" data-t="thNote">x</p></div>
+  <div class="sec"><h3><i data-i="User"></i><span data-t="accH">x</span></h3><div id="acv"></div></div>
+  <div class="sec"><h3><i data-i="Save"></i><span data-t="bkH">x</span></h3>
+    <p class="nt" style="margin-top:0" data-t="bkNote">x</p>
+    <button class="cp" data-a="cp" style="margin-top:0" data-t="bkCopy">x</button>
+    <details id="bd1"><summary data-t="bkShow">x</summary><textarea id="bo" rows="4" readonly></textarea></details>
+    <details><summary data-t="bkRest">x</summary><textarea id="bi" rows="4" data-ph="bkPh"></textarea><button class="go" data-a="rs" data-t="bkGo">x</button></details>
     <div class="nt" id="bm"></div>
   </div>
-  <div class="sec"><h3><i data-i="Info"></i>درباره‌ی اپ</h3>
+  <div class="sec"><h3><i data-i="Info"></i><span data-t="aboutH">x</span></h3>
     <p class="nt" id="of" style="margin-top:0">حالت آفلاین: در حال بررسی…</p>
-    <p class="nt" style="margin-top:0">نسخه‌ی اپ: <span id="vl">۲۱</span></p>
-    <button class="cp" data-a="up" style="margin-top:0">به‌روزرسانی اپ (بدون حذف داده‌ها)</button>
-    <p class="nt">نصب روی آیفون: در Safari دکمه Share ← Add to Home Screen.</p>
+    <p class="nt" style="margin-top:0"><span data-t="ver">x</span> <span id="vl">۲۲</span></p>
+    <button class="cp" data-a="up" style="margin-top:0" data-t="upd">x</button>
+    <p class="nt" data-t="iosNote">x</p>
   </div>
 </div></div>
 
@@ -133,9 +134,10 @@ textarea{direction:ltr;text-align:left;font-size:12px;resize:vertical}
 
 <script>
 const ICONS={"Utensils":[["path",{"d":"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"}],["path",{"d":"M7 2v20"}],["path",{"d":"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"}]],"Bus":[["path",{"d":"M8 6v6"}],["path",{"d":"M15 6v6"}],["path",{"d":"M2 12h19.6"}],["path",{"d":"M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"}],["circle",{"cx":"7","cy":"18","r":"2"}],["path",{"d":"M9 18h5"}],["circle",{"cx":"16","cy":"18","r":"2"}]],"Home":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}],["path",{"d":"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"}]],"House":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}],["path",{"d":"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"}]],"Receipt":[["path",{"d":"M12 17V7"}],["path",{"d":"M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"}],["path",{"d":"M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"}]],"ShoppingBag":[["path",{"d":"M16 10a4 4 0 0 1-8 0"}],["path",{"d":"M3.103 6.034h17.794"}],["path",{"d":"M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"}]],"HeartPulse":[["path",{"d":"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"}],["path",{"d":"M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"}]],"Ticket":[["path",{"d":"M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"}],["path",{"d":"M13 5v2"}],["path",{"d":"M13 17v2"}],["path",{"d":"M13 11v2"}]],"GraduationCap":[["path",{"d":"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"}],["path",{"d":"M22 10v6"}],["path",{"d":"M6 12.5V16a6 3 0 0 0 12 0v-3.5"}]],"MoreHorizontal":[["circle",{"cx":"12","cy":"12","r":"1"}],["circle",{"cx":"19","cy":"12","r":"1"}],["circle",{"cx":"5","cy":"12","r":"1"}]],"Ellipsis":[["circle",{"cx":"12","cy":"12","r":"1"}],["circle",{"cx":"19","cy":"12","r":"1"}],["circle",{"cx":"5","cy":"12","r":"1"}]],"Tag":[["path",{"d":"M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"}],["circle",{"cx":"7.5","cy":"7.5","r":".5","fill":"currentColor"}]],"Trash2":[["path",{"d":"M10 11v6"}],["path",{"d":"M14 11v6"}],["path",{"d":"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"}],["path",{"d":"M3 6h18"}],["path",{"d":"M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"}]],"Save":[["path",{"d":"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"}],["path",{"d":"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"}],["path",{"d":"M7 3v4a1 1 0 0 0 1 1h7"}]],"Plus":[["path",{"d":"M5 12h14"}],["path",{"d":"M12 5v14"}]],"FolderPlus":[["path",{"d":"M12 10v6"}],["path",{"d":"M9 13h6"}],["path",{"d":"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"}]],"X":[["path",{"d":"M18 6 6 18"}],["path",{"d":"m6 6 12 12"}]],"ArrowDown":[["path",{"d":"M12 5v14"}],["path",{"d":"m19 12-7 7-7-7"}]],"ArrowUp":[["path",{"d":"m5 12 7-7 7 7"}],["path",{"d":"M12 19V5"}]],"Wallet":[["path",{"d":"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"}],["path",{"d":"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"}]],"Briefcase":[["path",{"d":"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"}],["rect",{"width":"20","height":"14","x":"2","y":"6","rx":"2"}]],"TrendingUp":[["path",{"d":"M16 7h6v6"}],["path",{"d":"m22 7-8.5 8.5-5-5L2 17"}]],"Gift":[["path",{"d":"M12 7v14"}],["path",{"d":"M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"}],["path",{"d":"M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5"}],["rect",{"x":"3","y":"7","width":"18","height":"4","rx":"1"}]],"User":[["path",{"d":"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"}],["circle",{"cx":"12","cy":"7","r":"4"}]],"Settings":[["path",{"d":"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"}],["circle",{"cx":"12","cy":"12","r":"3"}]],"Info":[["circle",{"cx":"12","cy":"12","r":"10"}],["path",{"d":"M12 16v-4"}],["path",{"d":"M12 8h.01"}]]};
-const K='ledger-v1',$=s=>document.querySelector(s),fa=n=>Number(n||0).toLocaleString('fa-IR'),pn=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]),nd=s=>s.replace(/[٠-٩۰-۹]/g,c=>c.charCodeAt(0)&15);
+let LG='fa',ofS='chk';try{if(localStorage.getItem('ledger-lang')=='en')LG='en'}catch(e){}
+const K='ledger-v1',$=s=>document.querySelector(s),fa=n=>Number(n||0).toLocaleString(LG=='en'?'en-US':'fa-IR'),pn=n=>LG=='en'?String(n):String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]),pc=()=>LG=='en'?'%':'٪',nd=s=>s.replace(/[٠-٩۰-۹]/g,c=>c.charCodeAt(0)&15);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const MNL={fa:['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'],en:['Farvardin','Ordibehesht','Khordad','Tir','Mordad','Shahrivar','Mehr','Aban','Azar','Dey','Bahman','Esfand']};let MN=MNL[LG];
 const EC=['خوراک و رستوران','حمل‌ونقل','مسکن و اجاره','قبوض و شارژ','خرید و پوشاک','درمان و سلامت','تفریح و سرگرمی','آموزش','متفرقه'],IN=['حقوق','کسب‌وکار','سرمایه‌گذاری','هدیه','متفرقه'];
 const CM={'خوراک و رستوران':'#E8833A','حمل‌ونقل':'#2E86C1','مسکن و اجاره':'#7B61C9','قبوض و شارژ':'#8C6D4F','خرید و پوشاک':'#D6558B','درمان و سلامت':'#1FA39A','تفریح و سرگرمی':'#E5A33B','آموزش':'#5B6B8C','متفرقه':'#8A94A6','حقوق':'#1F8A5B','کسب‌وکار':'#2E8B8B','سرمایه‌گذاری':'#5E9E3F','هدیه':'#D6558B'};
 const PAL=['#E8833A','#2E86C1','#7B61C9','#8C6D4F','#D6558B','#1FA39A','#E5A33B','#5B6B8C','#8A94A6'];
@@ -143,6 +145,34 @@ const IM={'خوراک و رستوران':['Utensils'],'حمل‌ونقل':['Bus'
 const col=n=>{if(CM[n])return CM[n];let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))>>>0;return PAL[h%PAL.length]};
 function ic(names,sz,c,x){let n;for(const k of names)if(ICONS[k]){n=ICONS[k];break}if(!n)return'';return`<svg ${x||''} width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${n.map(([t,a])=>`<${t} ${Object.entries(a).map(([k,v])=>`${k}="${v}"`).join(' ')}/>`).join('')}</svg>`}
 const catIc=(n,s,c,x)=>ic(IM[n]||['Tag'],s,c,x);
+const CAT_EN={'خوراک و رستوران':'Food & dining','حمل‌ونقل':'Transport','مسکن و اجاره':'Housing & rent','قبوض و شارژ':'Bills & utilities','خرید و پوشاک':'Shopping & clothes','درمان و سلامت':'Health','تفریح و سرگرمی':'Entertainment','آموزش':'Education','متفرقه':'Other','حقوق':'Salary','کسب‌وکار':'Business','سرمایه‌گذاری':'Investments','هدیه':'Gifts'};
+const cn=n=>LG=='en'&&CAT_EN[n]||n,ds=t=>t.description==t.category?cn(t.category):t.description;
+const TX={fa:{
+intro:'برای دیدن و ثبت داده‌هات وارد شو یا ثبت‌نام کن. داده‌ها فقط بعد از ورود نمایش داده می‌شن.',settings:'تنظیمات',smsSum:'پر کردن از پیامک بانک',smsPh:'متن پیامک بانک رو اینجا بچسبون',expense:'خرج',income:'درآمد',amtLbl:'مبلغ (تومان)',amPh:'مثلاً ۲۵۰٬۰۰۰',descLbl:'توضیحات (اختیاری)',dsPh:'مثلاً ناهار با دوستان',catLbl:'دسته‌بندی',nnPh:'نام دسته جدید',dateLbl:'تاریخ',newTx:'تراکنش جدید',editTx:'ویرایش تراکنش',saveBtn:'ثبت در دفتر',saveEdit:'ذخیره تغییرات',
+langH:'زبان',appear:'ظاهر اپ',thAuto:'خودکار',thLight:'روز',thDark:'شب',thNote:'«خودکار» از حالت روز/شب خود گوشی پیروی می‌کنه.',accH:'حساب کاربری',bkH:'پشتیبان‌گیری و بازیابی',bkNote:'یه نسخه از همه‌ی تراکنش‌هات رو کپی کن و یه جای امن نگه دار. هر وقت لازم شد از همون برمی‌گردونی.',bkCopy:'کپی متن پشتیبان',bkShow:'نمایش متن پشتیبان',bkRest:'بازیابی از پشتیبان',bkPh:'متن پشتیبان رو اینجا جای‌گذاری کن...',bkGo:'بازیابی (اضافه به دفتر فعلی)',aboutH:'درباره‌ی اپ',ver:'نسخه‌ی اپ:',upd:'به‌روزرسانی اپ (بدون حذف داده‌ها)',iosNote:'نصب روی آیفون: در Safari دکمه Share ← Add to Home Screen.',fab:'افزودن تراکنش',
+offChk:'حالت آفلاین: در حال بررسی…',ofReady:'حالت آفلاین: آماده ✓',ofWait:'حالت آفلاین: هنوز فعال نشده (یک بار با اینترنت باز کن و دوباره امتحان کن)',ofNo:'حالت آفلاین: این مرورگر پشتیبانی نمی‌کنه',
+syncing:'در حال هماهنگ‌سازی…',offline:'آفلاین',offPend:'آفلاین · {0} تغییر هماهنگ‌نشده',authNeed:'برای هماهنگ‌سازی، خارج و دوباره وارد شو',pendS:'● {0} تغییر هماهنگ‌نشده',synced:'✓ هماهنگ',
+er_bad:'نام کاربری یا رمز معتبر نیست.',er_invite:'کد دعوت اشتباهه.',er_exists:'این نام کاربری قبلاً گرفته شده.',er_cred:'نام کاربری یا رمز اشتباهه.',er_locked:'چند بار اشتباه زدی؛ ۱۰ دقیقه صبر کن.',
+signedAs:'وارد شده‌ای با نام کاربری {0}.',keepMe:'مرا به خاطر بسپار (وارد بمونم)',syncNow:'هماهنگ‌سازی حالا',logout:'خروج از حساب',logoutNote:'با خروج، اپ قفل می‌شه. داده‌ها روی گوشی می‌مونن و با ورود دوباره، حتی بدون اینترنت، برمی‌گردن.',
+login:'ورود',signup:'ثبت‌نام',userLbl:'نام کاربری (حروف انگلیسی، عدد و _ . -)',passLbl:'رمز عبور',inviteLbl:'کد دعوت',keepNote:'اگه تیک نزنی، هر بار اپ رو ببندی قفل می‌شه و باید دوباره رمز بزنی.',mkAcc:'ساخت حساب',noRecover:'رمز فراموش‌شده بازیابی نداره؛ حتماً یادت بمونه. اولین ورود هر گوشی باید با اینترنت باشه؛ بعدش آفلاین هم می‌تونی وارد بشی.',
+userBad:'نام کاربری باید ۳ تا ۳۲ حرف انگلیسی، عدد یا _ . - باشه.',passShort:'رمز حداقل ۶ کاراکتر باشه.',wait:'لطفاً صبر کن…',noCrypto:'این مرورگر از رمزنگاری پشتیبانی نمی‌کنه.',errGen:'خطایی پیش اومد؛ دوباره امتحان کن.',signupOff:'ثبت‌نام فقط با اینترنت ممکنه.',firstOnline:'اولین ورود هر گوشی باید با اینترنت باشه.',
+heroLbl:'مانده این ماه · {0} {1}',toman:'تومان',carry:'شامل {0} تومان مانده از ماه قبل',del:'حذف',carried:'مانده از ماه قبل',totInc:'جمع درآمد',totExp:'جمع خرج',finalBal:'مانده نهایی',empty:'هنوز تراکنشی برای این ماه ثبت نشده.<br>با دکمه‌ی پایین اولین مورد رو اضافه کن.',chartH:'تفکیک هزینه‌ها بر اساس دسته',over:'این ماه {0} تومان بیشتر از درآمدت خرج کرده‌ای',allMonths:'همه‌ی ماه‌ها',catCount:'{0} تراکنش · جمع {1} تومان',noTx:'تراکنشی نیست.',
+smsNoAmt:'مبلغ رو پیدا نکردم؛ دستی وارد کن.',smsTypeUnk:'نوع تشخیص داده نشد',smsRial:' (پیامک ریال بود، تبدیل شد)',smsNoDate:' · تاریخ پیدا نشد، امروز گذاشته شد',smsEnd:'. دسته رو انتخاب و ثبت کن.',
+copied:'کپی شد.',selected:'متن انتخاب شد؛ دستی کپی کن.',restored:'بازیابی انجام شد.',badFmt:'فرمت متن پشتیبان درست نیست.'},
+en:{
+intro:'Sign in or sign up to see and record your data. Your data is shown only after you sign in.',settings:'Settings',smsSum:'Fill from a bank SMS',smsPh:'Paste the bank SMS text here',expense:'Expense',income:'Income',amtLbl:'Amount (Toman)',amPh:'e.g. 250,000',descLbl:'Description (optional)',dsPh:'e.g. Lunch with friends',catLbl:'Category',nnPh:'New category name',dateLbl:'Date',newTx:'New transaction',editTx:'Edit transaction',saveBtn:'Add to ledger',saveEdit:'Save changes',
+langH:'Language',appear:'Appearance',thAuto:'Auto',thLight:'Light',thDark:'Dark',thNote:'“Auto” follows your phone’s light/dark setting.',accH:'Account',bkH:'Backup and restore',bkNote:'Copy a backup of all your transactions and keep it somewhere safe. You can restore from it any time.',bkCopy:'Copy backup text',bkShow:'Show backup text',bkRest:'Restore from backup',bkPh:'Paste the backup text here...',bkGo:'Restore (adds to current ledger)',aboutH:'About',ver:'App version:',upd:'Update app (keeps your data)',iosNote:'Install on iPhone: in Safari tap Share → Add to Home Screen.',fab:'Add transaction',
+offChk:'Offline mode: checking…',ofReady:'Offline mode: ready ✓',ofWait:'Offline mode: not active yet (open once with internet and try again)',ofNo:'Offline mode: not supported in this browser',
+syncing:'Syncing…',offline:'Offline',offPend:'Offline · {0} unsynced changes',authNeed:'Sign out and back in to sync',pendS:'● {0} unsynced changes',synced:'✓ Synced',
+er_bad:'Invalid username or password.',er_invite:'Wrong invite code.',er_exists:'That username is already taken.',er_cred:'Wrong username or password.',er_locked:'Too many wrong attempts; wait 10 minutes.',
+signedAs:'Signed in as {0}.',keepMe:'Remember me (stay signed in)',syncNow:'Sync now',logout:'Sign out',logoutNote:'Signing out locks the app. Your data stays on this phone and comes back when you sign in again, even offline.',
+login:'Sign in',signup:'Sign up',userLbl:'Username (English letters, numbers and _ . -)',passLbl:'Password',inviteLbl:'Invite code',keepNote:'If unchecked, the app locks every time you close it and you’ll need your password again.',mkAcc:'Create account',noRecover:'A forgotten password can’t be recovered, so remember it. The first sign-in on each phone needs internet; after that you can sign in offline too.',
+userBad:'Username must be 3–32 characters: English letters, numbers or _ . -',passShort:'Password must be at least 6 characters.',wait:'Please wait…',noCrypto:'This browser doesn’t support encryption.',errGen:'Something went wrong; try again.',signupOff:'Signing up needs internet.',firstOnline:'The first sign-in on each phone needs internet.',
+heroLbl:'This month’s balance · {0} {1}',toman:'Toman',carry:'Includes {0} Toman carried over from last month',del:'Delete',carried:'Carried over',totInc:'Total income',totExp:'Total expenses',finalBal:'Final balance',empty:'No transactions for this month yet.<br>Use the button below to add the first one.',chartH:'Spending by category',over:'This month you spent {0} Toman more than you earned',allMonths:'All months',catCount:'{0} transactions · total {1} Toman',noTx:'No transactions.',
+smsNoAmt:'Couldn’t find the amount; enter it manually.',smsTypeUnk:'Type not detected',smsRial:' (SMS was in Rial, converted)',smsNoDate:' · date not found, today used',smsEnd:'. Pick a category and save.',
+copied:'Copied.',selected:'Text selected; copy it manually.',restored:'Restore done.',badFmt:'The backup text format is invalid.'}};
+const tr=(k,...a)=>{let s=TX[LG][k]??TX.fa[k];a.forEach((v,i)=>{s=s.split('{'+i+'}').join(v)});return s};
+const ofT=()=>{$('#of').textContent=tr({chk:'offChk',ok:'ofReady',wait:'ofWait',no:'ofNo'}[ofS])};
 /* تقویم شمسی */
 function g2j(gy,gm,gd){const m=[0,31,59,90,120,151,181,212,243,273,304,334],y2=gm>2?gy+1:gy;let d=355666+365*gy+((y2+3)/4|0)-((y2+99)/100|0)+((y2+399)/400|0)+gd+m[gm-1],jy=-1595+33*(d/12053|0);d%=12053;jy+=4*(d/1461|0);d%=1461;if(d>365){jy+=(d-1)/365|0;d=(d-1)%365}return d<186?[jy,1+(d/31|0),1+d%31]:[jy,7+((d-186)/30|0),1+(d-186)%30]}
 function j2g(jy,jm,jd){jy+=1595;let d=-355668+365*jy+(jy/33|0)*8+(((jy%33)+3)/4|0)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186),gy=400*(d/146097|0);d%=146097;if(d>36524){gy+=100*(--d/36524|0);d%=36524;if(d>=365)d++}gy+=4*(d/1461|0);d%=1461;if(d>365){gy+=(d-1)/365|0;d=(d-1)%365}let gd=d+1;const a=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31];let gm=0;for(;gm<13;gm++){if(gd<=a[gm])break;gd-=a[gm]}return[gy,gm,gd]}
@@ -172,28 +202,27 @@ const r=await api('PUT','/data',{d:JSON.stringify(S),r:g.r});if(r.s==200)break;i
 pend=0;ls(pkey(A.u),0);S.t=Date.now();ls(dkey(A.u),S);return'ok'}catch(e){return'fail'}}
 async function sync(){if(!A||busy)return;busy=true;stat='';setStat();const r=await core();busy=false;stat=r=='ok'?'':r;render();setStat();acView()}
 function setStat(){const e=$('#sb');if(!e)return;if(!A){e.hidden=true;return}e.hidden=false;let t,c;
-if(busy){t='در حال هماهنگ‌سازی…';c='sy'}else if(navigator.onLine===false||stat=='off'){t=pend?'آفلاین · '+pn(pend)+' تغییر هماهنگ‌نشده':'آفلاین';c='of'}else if(stat=='auth'){t='برای هماهنگ‌سازی، خارج و دوباره وارد شو';c='pd'}else if(pend){t='● '+pn(pend)+' تغییر هماهنگ‌نشده';c='pd'}else{t='✓ هماهنگ';c='ok'}
+if(busy){t=tr('syncing');c='sy'}else if(navigator.onLine===false||stat=='off'){t=pend?tr('offPend',pn(pend)):tr('offline');c='of'}else if(stat=='auth'){t=tr('authNeed');c='pd'}else if(pend){t=tr('pendS',pn(pend));c='pd'}else{t=tr('synced');c='ok'}
 e.textContent=t;e.className='sb '+c}
-const ER={bad:'نام کاربری یا رمز معتبر نیست.',invite:'کد دعوت اشتباهه.',exists:'این نام کاربری قبلاً گرفته شده.',cred:'نام کاربری یا رمز اشتباهه.',locked:'چند بار اشتباه زدی؛ ۱۰ دقیقه صبر کن.'};
 async function dk(u,p){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(p),'PBKDF2',false,['deriveBits']),b=await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode('ledger.v1:'+u),iterations:150000,hash:'SHA-256'},k,256);return hex(b)}
 function acView(){document.body.classList.toggle('locked',!A);const v=A?$('#acv'):$('#gv');if(!v)return;
-if(A){v.innerHTML=`<p class="nt">وارد شده‌ای با نام کاربری <b dir="ltr">${esc(A.u)}</b>.</p><label class="ck"><input type="checkbox" data-a="kp" ${A.keep===false?'':'checked'}><span>مرا به خاطر بسپار (وارد بمونم)</span></label><button class="go" data-a="sy">هماهنگ‌سازی حالا</button><button class="cp" data-a="lo">خروج از حساب</button><p class="nt">با خروج، اپ قفل می‌شه. داده‌ها روی گوشی می‌مونن و با ورود دوباره، حتی بدون اینترنت، برمی‌گردن.</p>`;return}
-cl();v.innerHTML=`<div class="tg"><button class="${amode=='login'?'on pri':''}" data-a="am" data-v="login">ورود</button><button class="${amode=='signup'?'on pri':''}" data-a="am" data-v="signup">ثبت‌نام</button></div><div class="fl"><label>نام کاربری (حروف انگلیسی، عدد و _ . -)</label><input id="au" dir="ltr" autocapitalize="none" autocomplete="username" value="${esc(av)}"></div><div class="fl"><label>رمز عبور</label><input id="ap" type="password" dir="ltr" autocomplete="${amode=='login'?'current-password':'new-password'}"></div>${amode=='signup'?'<div class="fl"><label>کد دعوت</label><input id="ai" dir="ltr" autocapitalize="none"></div>':''}<label class="ck"><input type="checkbox" id="ak" ${lg('ledger-keep')===false?'':'checked'}><span>مرا به خاطر بسپار (وارد بمونم)</span></label><p class="nt" style="margin:0 0 6px">اگه تیک نزنی، هر بار اپ رو ببندی قفل می‌شه و باید دوباره رمز بزنی.</p><div class="er" id="ae">${esc(smsg)}</div><button class="go" data-a="ao">${amode=='login'?'ورود':'ساخت حساب'}</button><p class="nt">رمز فراموش‌شده بازیابی نداره؛ حتماً یادت بمونه. اولین ورود هر گوشی باید با اینترنت باشه؛ بعدش آفلاین هم می‌تونی وارد بشی.</p>`}
+if(A){v.innerHTML=`<p class="nt">${tr('signedAs','<b dir="ltr">'+esc(A.u)+'</b>')}</p><label class="ck"><input type="checkbox" data-a="kp" ${A.keep===false?'':'checked'}><span>${tr('keepMe')}</span></label><button class="go" data-a="sy">${tr('syncNow')}</button><button class="cp" data-a="lo">${tr('logout')}</button><p class="nt">${tr('logoutNote')}</p>`;return}
+cl();v.innerHTML=`<div class="tg"><button class="${amode=='login'?'on pri':''}" data-a="am" data-v="login">${tr('login')}</button><button class="${amode=='signup'?'on pri':''}" data-a="am" data-v="signup">${tr('signup')}</button></div><div class="fl"><label>${tr('userLbl')}</label><input id="au" dir="ltr" autocapitalize="none" autocomplete="username" value="${esc(av)}"></div><div class="fl"><label>${tr('passLbl')}</label><input id="ap" type="password" dir="ltr" autocomplete="${amode=='login'?'current-password':'new-password'}"></div>${amode=='signup'?'<div class="fl"><label>'+tr('inviteLbl')+'</label><input id="ai" dir="ltr" autocapitalize="none"></div>':''}<label class="ck"><input type="checkbox" id="ak" ${lg('ledger-keep')===false?'':'checked'}><span>${tr('keepMe')}</span></label><p class="nt" style="margin:0 0 6px">${tr('keepNote')}</p><div class="er" id="ae">${esc(smsg)}</div><button class="go" data-a="ao">${amode=='login'?tr('login'):tr('mkAcc')}</button><p class="nt">${tr('noRecover')}</p>`}
 function startSession(u,keep,t,k){curK=k;openUser(u,keep,t);try{localStorage.setItem('ledger-last',u)}catch(e){}
 const old=lg('ledger-v1');if(old&&old.transactions&&(!old.owner||old.owner==u)){S=merge(S,norm(old));ls(dkey(u),S);pend++;ls(pkey(u),pend);ld('ledger-v1')}
 try{sessionStorage.setItem('ledger-live','1')}catch(e){}smsg='';acView();render();setStat();sync()}
 async function authGo(){const u=$('#au').value.trim().toLowerCase(),p=$('#ap').value,e=$('#ae'),go=document.querySelector('#gv .go'),keep=$('#ak').checked;ls('ledger-keep',keep);
-if(!/^[a-z0-9_.-]{3,32}$/.test(u)){e.textContent='نام کاربری باید ۳ تا ۳۲ حرف انگلیسی، عدد یا _ . - باشه.';return}
-if(p.length<6){e.textContent='رمز حداقل ۶ کاراکتر باشه.';return}
-go.disabled=true;e.textContent='لطفاً صبر کن…';
-let k;try{k=await dk(u,p)}catch(x){e.textContent='این مرورگر از رمزنگاری پشتیبانی نمی‌کنه.';go.disabled=false;return}
+if(!/^[a-z0-9_.-]{3,32}$/.test(u)){e.textContent=tr('userBad');return}
+if(p.length<6){e.textContent=tr('passShort');return}
+go.disabled=true;e.textContent=tr('wait');
+let k;try{k=await dk(u,p)}catch(x){e.textContent=tr('noCrypto');go.disabled=false;return}
 let res=null,off=navigator.onLine===false;
 if(!off){res=await api('POST','/'+amode,{u,p:k,i:amode=='signup'?$('#ai').value.trim():undefined});if(res.s==0)off=true}
-if(!off){if(res.s!=200){e.textContent=ER[res.e]||'خطایی پیش اومد؛ دوباره امتحان کن.';go.disabled=false;return}
+if(!off){if(res.s!=200){e.textContent=(res.e&&TX.fa['er_'+res.e])?tr('er_'+res.e):tr('errGen');go.disabled=false;return}
 const s=rnd();ACC[u]={s,v:await sha(s+k),t:res.t};ls(AK,ACC);startSession(u,keep,res.t,k);return}
-if(amode=='signup'){e.textContent='ثبت‌نام فقط با اینترنت ممکنه.';go.disabled=false;return}
-const a=ACC[u];if(!a){e.textContent='اولین ورود هر گوشی باید با اینترنت باشه.';go.disabled=false;return}
-if(await sha(a.s+k)!==a.v){e.textContent=ER.cred;go.disabled=false;return}
+if(amode=='signup'){e.textContent=tr('signupOff');go.disabled=false;return}
+const a=ACC[u];if(!a){e.textContent=tr('firstOnline');go.disabled=false;return}
+if(await sha(a.s+k)!==a.v){e.textContent=tr('er_cred');go.disabled=false;return}
 startSession(u,keep,a.t||null,k)}
 async function logout(){while(busy)await new Promise(r=>setTimeout(r,150));
 if(pend&&navigator.onLine!==false)await sync();
@@ -226,7 +255,7 @@ function pie(it,tot){const cx=170,y0=150,r1=36,r2=56,P=(r,a)=>[cx+r*Math.cos(a),
 it.forEach(x=>{const sw=x.v/tot*2*Math.PI,g=it.length>1?.035:0,a0=a+g,a1=Math.min(a+sw-g,a0+6.28),L=a1-a0>Math.PI?1:0,[x1,y1]=P(r2,a0),[x2,y2]=P(r2,a1),[x3,y3]=P(r1,a1),[x4,y4]=P(r1,a0);
 p+=`<path d="M${x1} ${y1}A${r2} ${r2} 0 ${L} 1 ${x2} ${y2}L${x3} ${y3}A${r1} ${r1} 0 ${L} 0 ${x4} ${y4}Z" fill="${x.c}"/>`;
 const am=a+sw/2,[ex,ey]=P(r2,am),[lx,ly]=P(r2+9,am),[bx,by]=P(r2+24,am),[tx,ty2]=P(r2+53,am);
-l+=`<line x1="${ex}" y1="${ey}" x2="${lx}" y2="${ly}" stroke="${x.c}" stroke-width="1.5"/><circle cx="${bx}" cy="${by}" r="13" fill="${x.c}"/>${catIc(x.n,15,'#fff',`x="${bx-7.5}" y="${by-7.5}"`)}<text x="${tx}" y="${ty2}" text-anchor="${tx>=cx?'start':'end'}" dominant-baseline="middle" font-size="13" font-weight="700" fill="${x.c}" direction="ltr" style="unicode-bidi:isolate">${pn(Math.round(x.v/tot*100))}٪</text>`;a+=sw});
+l+=`<line x1="${ex}" y1="${ey}" x2="${lx}" y2="${ly}" stroke="${x.c}" stroke-width="1.5"/><circle cx="${bx}" cy="${by}" r="13" fill="${x.c}"/>${catIc(x.n,15,'#fff',`x="${bx-7.5}" y="${by-7.5}"`)}<text x="${tx}" y="${ty2}" text-anchor="${tx>=cx?'start':'end'}" dominant-baseline="middle" font-size="13" font-weight="700" fill="${x.c}" direction="ltr" style="unicode-bidi:isolate">${pn(Math.round(x.v/tot*100))}${pc()}</text>`;a+=sw});
 return`<svg viewBox="0 0 340 300" dir="ltr" style="width:100%;max-width:360px;display:block;margin:0 auto">${p}${l}</svg>`}
 const tsid=t=>parseFloat(String(t.id))||0;
 function render(){
@@ -235,17 +264,17 @@ const m=S.transactions.filter(t=>{const j=i2j(t.date);return j[0]==cy&&j[1]==cm}
 const sm=k=>m.filter(t=>t.type==k).reduce((s,t)=>s+t.amount,0),inc=sm('income'),exp=sm('expense'),net=inc-exp;
 const key=cy*12+cm;let car=0;S.transactions.forEach(t=>{const j=i2j(t.date);if(j[0]*12+j[1]<key)car+=t.type=='income'?t.amount:-t.amount});const bal=car+net;
 $('#lb').textContent=MN[cm-1]+' '+pn(cy);
-$('#st').innerHTML=`<div class="hero"><div class="hl">مانده این ماه · ${MN[cm-1]} ${pn(cy)}</div><div class="hn"><span>${fa(bal)}</span><small>تومان</small></div>${car?`<div class="hc">شامل ${fa(car)} تومان مانده از ماه قبل</div>`:''}<div class="hr"><div class="chip"><i class="ci g">${ic(['ArrowDown'],16,'currentColor')}</i><div><small>درآمد</small><b>${fa(inc)}</b></div></div><div class="chip"><i class="ci r">${ic(['ArrowUp'],16,'currentColor')}</i><div><small>خرج</small><b>${fa(exp)}</b></div></div></div></div>`;
-$('#ls').innerHTML=m.length?`<div class="rows">${m.map(t=>{const c=col(t.category);return`<div class="r" data-a="ed" data-id="${esc(t.id)}"><div class="tile" style="background:${c}1F;color:${c}">${catIc(t.category,21,'currentColor')}</div><div class="rm"><b>${esc(t.description)}</b><small>${esc(t.category)} · ${pn(i2j(t.date)[2])} ${MN[cm-1]}</small></div><div class="am ${t.type}">${t.type=='expense'?'−':'+'}${fa(t.amount)}</div><button class="x" data-a="del" data-id="${esc(t.id)}" aria-label="حذف">${ic(['Trash2'],16,'currentColor')}</button></div>`}).join('')}</div><div class="tt">${car?`<div><span>مانده از ماه قبل</span><span>${fa(car)} تومان</span></div>`:''}<div><span>جمع درآمد</span><span>${fa(inc)} تومان</span></div><div><span>جمع خرج</span><span>${fa(exp)} تومان</span></div><div class="f"><span>مانده نهایی</span><span>${fa(bal)} تومان</span></div></div>`:`<div class="em">هنوز تراکنشی برای این ماه ثبت نشده.<br>با دکمه‌ی پایین اولین مورد رو اضافه کن.</div>`;
+$('#st').innerHTML=`<div class="hero"><div class="hl">${tr('heroLbl',MN[cm-1],pn(cy))}</div><div class="hn"><span>${fa(bal)}</span><small>${tr('toman')}</small></div>${car?`<div class="hc">${tr('carry',fa(car))}</div>`:''}<div class="hr"><div class="chip"><i class="ci g">${ic(['ArrowDown'],16,'currentColor')}</i><div><small>${tr('income')}</small><b>${fa(inc)}</b></div></div><div class="chip"><i class="ci r">${ic(['ArrowUp'],16,'currentColor')}</i><div><small>${tr('expense')}</small><b>${fa(exp)}</b></div></div></div></div>`;
+$('#ls').innerHTML=m.length?`<div class="rows">${m.map(t=>{const c=col(t.category);return`<div class="r" data-a="ed" data-id="${esc(t.id)}"><div class="tile" style="background:${c}1F;color:${c}">${catIc(t.category,21,'currentColor')}</div><div class="rm"><b>${esc(ds(t))}</b><small>${esc(cn(t.category))} · ${pn(i2j(t.date)[2])} ${MN[cm-1]}</small></div><div class="am ${t.type}">${t.type=='expense'?'−':'+'}${fa(t.amount)}</div><button class="x" data-a="del" data-id="${esc(t.id)}" aria-label="${tr('del')}">${ic(['Trash2'],16,'currentColor')}</button></div>`}).join('')}</div><div class="tt">${car?`<div><span>${tr('carried')}</span><span>${fa(car)} ${tr('toman')}</span></div>`:''}<div><span>${tr('totInc')}</span><span>${fa(inc)} ${tr('toman')}</span></div><div><span>${tr('totExp')}</span><span>${fa(exp)} ${tr('toman')}</span></div><div class="f"><span>${tr('finalBal')}</span><span>${fa(bal)} ${tr('toman')}</span></div></div>`:`<div class="em">${tr('empty')}</div>`;
 const cs={};m.filter(t=>t.type=='expense').forEach(t=>cs[t.category]=(cs[t.category]||0)+t.amount);
 const it=Object.entries(cs).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({n,v,c:col(n)}));
 $('#cs').hidden=!it.length;
-$('#cs').innerHTML=it.length?`<h3>تفکیک هزینه‌ها بر اساس دسته</h3>${inc>0&&net<0?`<div class="os">این ماه ${fa(-net)} تومان بیشتر از درآمدت خرج کرده‌ای</div>`:''}${pie(it,exp)}${it.map(x=>`<div class="cr" data-a="cat" data-n="${esc(x.n)}"><div class="t"><span><i class="bd" style="background:${x.c}">${catIc(x.n,11,'#fff')}</i>${esc(x.n)}</span><b>${fa(x.v)} <small>(${pn(Math.round(x.v/exp*100))}٪)</small></b></div><div class="br"><i style="width:${x.v/it[0].v*100}%;background:${x.c}"></i></div></div>`).join('')}`:'';
+$('#cs').innerHTML=it.length?`<h3>${tr('chartH')}</h3>${inc>0&&net<0?`<div class="os">${tr('over',fa(-net))}</div>`:''}${pie(it,exp)}${it.map(x=>`<div class="cr" data-a="cat" data-n="${esc(x.n)}"><div class="t"><span><i class="bd" style="background:${x.c}">${catIc(x.n,11,'#fff')}</i>${esc(cn(x.n))}</span><b>${fa(x.v)} <small>(${pn(Math.round(x.v/exp*100))}${pc()})</small></b></div><div class="br"><i style="width:${x.v/it[0].v*100}%;background:${x.c}"></i></div></div>`).join('')}`:'';
 if(cv)catView();
 }
 function catView(){if(!cv||!A)return;const key=cy*12+cm,c=col(cv.n);
 const L=S.transactions.filter(t=>t.type=='expense'&&t.category==cv.n&&(cv.all||(j=>j[0]*12+j[1]==key)(i2j(t.date)))).sort((a,b)=>b.date.localeCompare(a.date)),tot=L.reduce((s,t)=>s+t.amount,0);
-$('#cvb').innerHTML=`<div class="sht"><h2 style="display:flex;align-items:center;gap:8px"><i class="bd" style="width:28px;height:28px;background:${c}">${catIc(cv.n,16,'#fff')}</i>${esc(cv.n)}</h2><button class="x" data-a="cl">${ic(['X'],20,'currentColor')}</button></div><div class="tg"><button class="${cv.all?'':'on pri'}" data-a="cm" data-v="0">${MN[cm-1]} ${pn(cy)}</button><button class="${cv.all?'on pri':''}" data-a="cm" data-v="1">همه‌ی ماه‌ها</button></div><p class="nt" style="margin:0 0 6px">${pn(L.length)} تراکنش · جمع ${fa(tot)} تومان</p>${L.length?`<div class="rows" style="padding:0">${L.map(t=>{const j=i2j(t.date);return`<div class="r"><div class="rm"><b>${esc(t.description)}</b><small>${pn(j[2])} ${MN[j[1]-1]} ${pn(j[0])}</small></div><div class="am expense">−${fa(t.amount)}</div><button class="x" data-a="del" data-id="${esc(t.id)}" aria-label="حذف">${ic(['Trash2'],16,'currentColor')}</button></div>`}).join('')}</div>`:'<div class="em">تراکنشی نیست.</div>'}`}
+$('#cvb').innerHTML=`<div class="sht"><h2 style="display:flex;align-items:center;gap:8px"><i class="bd" style="width:28px;height:28px;background:${c}">${catIc(cv.n,16,'#fff')}</i>${esc(cn(cv.n))}</h2><button class="x" data-a="cl">${ic(['X'],20,'currentColor')}</button></div><div class="tg"><button class="${cv.all?'':'on pri'}" data-a="cm" data-v="0">${MN[cm-1]} ${pn(cy)}</button><button class="${cv.all?'on pri':''}" data-a="cm" data-v="1">${tr('allMonths')}</button></div><p class="nt" style="margin:0 0 6px">${tr('catCount',pn(L.length),fa(tot))}</p>${L.length?`<div class="rows" style="padding:0">${L.map(t=>{const j=i2j(t.date);return`<div class="r"><div class="rm"><b>${esc(ds(t))}</b><small>${pn(j[2])} ${MN[j[1]-1]} ${pn(j[0])}</small></div><div class="am expense">−${fa(t.amount)}</div><button class="x" data-a="del" data-id="${esc(t.id)}" aria-label="${tr('del')}">${ic(['Trash2'],16,'currentColor')}</button></div>`}).join('')}</div>`:'<div class="em">'+tr('noTx')+'</div>'}`}
 const yc=()=>{$('#yl').classList.remove('open');$('#ys').classList.remove('open')};
 function pills(){const a=Math.min(T[0]-2,cy),b=Math.max(T[0]+3,cy),ys=[];for(let y=a;y<=b;y++)ys.push(`<button class="p" data-a="yr" data-y="${y}">${pn(y)}</button>`);$('#yl').innerHTML=ys.join('');
 $('#ys').innerHTML='<button class="p" data-a="yo"><span id="yv"></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>';
@@ -255,17 +284,17 @@ document.querySelectorAll('#yl .p').forEach(b=>{b.classList.toggle('on',b.datase
 document.querySelectorAll('#ps .p').forEach(b=>{const on=b.dataset.m==cm;b.classList.toggle('on',on);b.classList.toggle('now',cy==T[0]&&b.dataset.m==T[1]);if(on)b.scrollIntoView({inline:'center',block:'nearest',behavior:sm?'smooth':'auto'})})}
 /* فرم */
 const opts=()=>ty=='expense'?EC.concat(S.categories.expense):IN.concat(S.categories.income);
-function fillCat(v){$('#ct').innerHTML=opts().map(c=>`<option>${esc(c)}</option>`).join('');if(v)$('#ct').value=v}
+function fillCat(v){$('#ct').innerHTML=opts().map(c=>`<option value="${esc(c)}">${esc(cn(c))}</option>`).join('');if(v)$('#ct').value=v}
 function days(v){const o=v||+$('#dd').value||1,n=dim(+$('#dy').value,+$('#dm').value);$('#dd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}">${pn(i+1)}</option>`).join('');$('#dd').value=Math.min(o,n)}
-function openF(t){ed=t?t.id:null;const j=t?i2j(t.date):T;ty=t?t.type:'expense';document.querySelectorAll('#sh .tg button').forEach(x=>x.classList.toggle('on',x.dataset.v==ty));$('#am').value=t?Number(t.amount).toLocaleString('fa-IR'):'';$('#ds').value=t?t.description:'';$('#r2').hidden=true;fillCat();
-if(t){if(![...$('#ct').options].some(o=>o.value==t.category))$('#ct').insertAdjacentHTML('beforeend','<option>'+esc(t.category)+'</option>');$('#ct').value=t.category}
+function openF(t){ed=t?t.id:null;const j=t?i2j(t.date):T;ty=t?t.type:'expense';document.querySelectorAll('#sh .tg button').forEach(x=>x.classList.toggle('on',x.dataset.v==ty));$('#am').value=t?fa(t.amount):'';$('#ds').value=t&&t.description!=t.category?t.description:'';$('#r2').hidden=true;fillCat();
+if(t){if(![...$('#ct').options].some(o=>o.value==t.category))$('#ct').insertAdjacentHTML('beforeend','<option value="'+esc(t.category)+'">'+esc(cn(t.category))+'</option>');$('#ct').value=t.category}
 const y0=Math.min(T[0]-10,j[0]),y1=Math.max(T[0]+1,j[0]);
 $('#dy').innerHTML=Array.from({length:y1-y0+1},(_,i)=>y0+i).map(y=>`<option value="${y}">${pn(y)}</option>`).join('');$('#dm').innerHTML=MN.map((m,i)=>`<option value="${i+1}">${m}</option>`).join('');$('#dy').value=j[0];$('#dm').value=j[1];days(j[2]);
-$('#smd').hidden=!!t;$('#smd').open=false;$('#sms').value='';$('#smm').textContent='';$('#shh').textContent=t?'ویرایش تراکنش':'تراکنش جدید';$('#svb').textContent=t?'ذخیره تغییرات':'ثبت در دفتر';$('#sh').classList.add('on')}
+$('#smd').hidden=!!t;$('#smd').open=false;$('#sms').value='';$('#smm').textContent='';$('#shh').textContent=t?tr('editTx'):tr('newTx');$('#svb').textContent=t?tr('saveEdit'):tr('saveBtn');$('#sh').classList.add('on')}
 const cl=()=>{cv=null;ed=null;document.querySelectorAll('.ov2').forEach(o=>o.classList.remove('on'))};
 function submit(){const am=+nd($('#am').value).replace(/\D/g,'');if(!am){$('#am').focus();return}const c=$('#ct').value,y=+$('#dy').value,m=+$('#dm').value,d=+$('#dd').value;
 const o={type:ty,amount:am,description:$('#ds').value.trim()||c,category:c,date:j2i(y,m,d)},et=ed&&S.transactions.find(x=>x.id==ed);if(et){Object.assign(et,o);et.u=Date.now()}else S.transactions.push(Object.assign({id:Date.now()+'-'+Math.random().toString(36).slice(2,8)},o));save();cy=y;cm=m;mark(1);render();cl()}
-$('#am').addEventListener('input',e=>{const r=nd(e.target.value).replace(/\D/g,'');e.target.value=r?Number(r).toLocaleString('fa-IR'):''});
+$('#am').addEventListener('input',e=>{const r=nd(e.target.value).replace(/\D/g,'');e.target.value=r?fa(Number(r)):''});
 function parseSms(raw){const t=nd(raw).replace(/ي/g,'ی').replace(/ك/g,'ک');let type=null;
 const mi=t.search(/واریز|نشست|دریافت|افزایش|اعتبار/),me=t.search(/برداشت|پرید|خرید|پرداخت|کسر|کاهش|انتقال|هزینه|کارمزد/);
 if(mi>=0&&(me<0||mi<me))type='income';else if(me>=0)type='expense';else{const sg=t.match(/(?:^|[\s:])([+\-−–])\s*\d/);if(sg)type=sg[1]=='+'?'income':'expense'}
@@ -276,15 +305,15 @@ const m=w.match(/(\d[\d,٬،]*)\s*(ریال|تومان)/)||w.match(/(\d{1,3}(?:[
 let amount=0,unit='ریال';if(m){const v=+m[1].replace(/\D/g,'');unit=m[2]||'ریال';amount=unit=='ریال'?Math.round(v/10):v}
 return{type,amount,date,unit}}
 $('#sms').addEventListener('input',()=>{const v=$('#sms').value.trim(),e=$('#smm');if(!v){e.textContent='';return}
-const r=parseSms(v);if(!r.amount){e.textContent='مبلغ رو پیدا نکردم؛ دستی وارد کن.';return}
+const r=parseSms(v);if(!r.amount){e.textContent=tr('smsNoAmt');return}
 if(r.type){ty=r.type;document.querySelectorAll('#sh .tg button').forEach(x=>x.classList.toggle('on',x.dataset.v==ty));fillCat()}
-$('#am').value=r.amount.toLocaleString('fa-IR');
+$('#am').value=fa(r.amount);
 if(r.date){const[y,mo,d]=r.date;if(![...$('#dy').options].some(o=>o.value==y))$('#dy').insertAdjacentHTML('beforeend',`<option value="${y}">${pn(y)}</option>`);$('#dy').value=y;$('#dm').value=mo;days(d)}
-e.textContent=(r.type?(r.type=='income'?'درآمد':'خرج'):'نوع تشخیص داده نشد')+' · '+fa(r.amount)+' تومان'+(r.unit=='ریال'?' (پیامک ریال بود، تبدیل شد)':'')+(r.date?' · '+pn(r.date[2])+' '+MN[r.date[1]-1]+' '+pn(r.date[0]):' · تاریخ پیدا نشد، امروز گذاشته شد')+'. دسته رو انتخاب و ثبت کن.'});
+e.textContent=(r.type?tr(r.type):tr('smsTypeUnk'))+' · '+fa(r.amount)+' '+tr('toman')+(r.unit=='ریال'?tr('smsRial'):'')+(r.date?' · '+pn(r.date[2])+' '+MN[r.date[1]-1]+' '+pn(r.date[0]):tr('smsNoDate'))+tr('smsEnd')});
 $('#dy').addEventListener('change',()=>days());$('#dm').addEventListener('change',()=>days());
 document.addEventListener('click',e=>{
 if(e.target.classList.contains('ov2'))return cl();
-const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;if(!A&&a!='am'&&a!='ao')return;
+const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;if(!A&&a!='am'&&a!='ao'&&a!='lg')return;
 if(a=='mo'){cm=+b.dataset.m;yc();mark(1);render()}
 else if(a=='yr'){cy=+b.dataset.y;yc();mark(1);render()}
 else if(a=='yo'){const o=$('#yl').classList.toggle('open');$('#ys').classList.toggle('open',o)}
@@ -296,24 +325,35 @@ else if(a=='ty'){ty=b.dataset.v;document.querySelectorAll('.tg button').forEach(
 else if(a=='nc'){$('#r2').hidden=!$('#r2').hidden;if(!$('#r2').hidden)$('#nn').focus()}
 else if(a=='ac'){const n=$('#nn').value.trim();if(!n)return;const base=ty=='expense'?EC:IN,ex=S.categories[ty];if(!base.includes(n)&&!ex.includes(n)){ex.push(n);save()}fillCat(n);$('#nn').value='';$('#r2').hidden=true}
 else if(a=='sv')submit();
-else if(a=='cp'){const o=$('#bo').value;(navigator.clipboard?navigator.clipboard.writeText(o):Promise.reject()).then(()=>{$('#bm').textContent='کپی شد.'},()=>{$('#bd1').open=true;$('#bo').select();$('#bm').textContent='متن انتخاب شد؛ دستی کپی کن.'})}
+else if(a=='cp'){const o=$('#bo').value;(navigator.clipboard?navigator.clipboard.writeText(o):Promise.reject()).then(()=>{$('#bm').textContent=tr('copied')},()=>{$('#bd1').open=true;$('#bo').select();$('#bm').textContent=tr('selected')})}
 else if(a=='acct'){acView();$('#bo').value=JSON.stringify({transactions:S.transactions,categories:S.categories});$('#bm').textContent='';$('#ac').classList.add('on')}
 else if(a=='am'){av=($('#au')||{}).value||'';amode=b.dataset.v;smsg='';acView()}
 else if(a=='ao')authGo();
 else if(a=='sy')sync();
 else if(a=='lo')logout();
 else if(a=='up')hardUpdate();
+else if(a=='lg'){if(!A)av=($('#au')||{}).value||'';LG=b.dataset.v=='en'?'en':'fa';try{localStorage.setItem('ledger-lang',LG)}catch(x){}applyLang()}
 else if(a=='th'){try{localStorage.setItem('ledger-theme',b.dataset.v)}catch(x){}thm(b.dataset.v)}
 else if(a=='kp'){ls('ledger-keep',b.checked);A.keep=b.checked;ls(SK,{u:A.u,keep:A.keep});try{if(!A.keep)sessionStorage.setItem('ledger-live','1')}catch(x){}}
 else if(a=='cat'){cv={n:b.dataset.n,all:false};catView();$('#cvw').classList.add('on')}
 else if(a=='cm'){cv.all=b.dataset.v=='1';catView()}
-else if(a=='rs'){try{const p=JSON.parse($('#bi').value);if(!Array.isArray(p.transactions))throw 0;S=merge(S,norm(p));save();render();$('#bi').value='';$('#bm').textContent='بازیابی انجام شد.'}catch(x){$('#bm').textContent='فرمت متن پشتیبان درست نیست.'}}
+else if(a=='rs'){try{const p=JSON.parse($('#bi').value);if(!Array.isArray(p.transactions))throw 0;S=merge(S,norm(p));save();render();$('#bi').value='';$('#bm').textContent=tr('restored')}catch(x){$('#bm').textContent=tr('badFmt')}}
 });
 /* راه‌اندازی */
-$('#acb').innerHTML=ic(['Settings'],18,'currentColor');document.querySelectorAll('[data-i]').forEach(e=>{e.innerHTML=ic([e.dataset.i],16,'currentColor')});$('#fab').innerHTML=ic(['Plus'],18,'#fff')+' افزودن تراکنش';$('#ncb').innerHTML=ic(['FolderPlus'],18,'currentColor');
+function applyLang(){const d=document.documentElement;d.lang=LG;d.dir=LG=='en'?'ltr':'rtl';MN=MNL[LG];
+document.querySelectorAll('[data-t]').forEach(e=>{e.textContent=tr(e.dataset.t)});
+document.querySelectorAll('[data-ph]').forEach(e=>{e.placeholder=tr(e.dataset.ph)});
+document.querySelectorAll('[data-a=lg]').forEach(x=>x.classList.toggle('on',x.dataset.v==LG));
+$('#acb').setAttribute('aria-label',tr('settings'));$('#fab').innerHTML=ic(['Plus'],18,'#fff')+' '+tr('fab');
+$('#shh').textContent=ed?tr('editTx'):tr('newTx');$('#svb').textContent=ed?tr('saveEdit'):tr('saveBtn');
+const cv0=$('#ct').value,yv=$('#dy').value,mv=$('#dm').value,dv=+$('#dd').value;
+if(yv){$('#dy').innerHTML=[...$('#dy').options].map(o=>`<option value="${o.value}">${pn(o.value)}</option>`).join('');$('#dy').value=yv;$('#dm').innerHTML=MN.map((m,i)=>`<option value="${i+1}">${m}</option>`).join('');$('#dm').value=mv;days(dv)}
+if($('#ct').options.length)fillCat(cv0);
+ofT();pills();mark(0);render();acView();setStat()}
+$('#acb').innerHTML=ic(['Settings'],18,'currentColor');document.querySelectorAll('[data-i]').forEach(e=>{e.innerHTML=ic([e.dataset.i],16,'currentColor')});$('#ncb').innerHTML=ic(['FolderPlus'],18,'currentColor');
 document.querySelectorAll('.x[data-a=cl]').forEach(b=>b.innerHTML=ic(['X'],20,'currentColor'));
-pills();mark(0);render();acView();setStat();if(A)sync();addEventListener('online',()=>{setStat();sync()});addEventListener('offline',setStat);document.addEventListener('visibilitychange',()=>{if(!document.hidden){sync();if(navigator.serviceWorker)navigator.serviceWorker.getRegistration().then(r=>r&&r.update().catch(()=>{}))}});
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));navigator.serviceWorker.ready.then(r=>{$('#of').textContent='حالت آفلاین: آماده ✓';r.update().catch(()=>{})});setTimeout(()=>{if(!/آماده/.test($('#of').textContent))$('#of').textContent='حالت آفلاین: هنوز فعال نشده (یک بار با اینترنت باز کن و دوباره امتحان کن)'},5000)}else $('#of').textContent='حالت آفلاین: این مرورگر پشتیبانی نمی‌کنه';
+applyLang();if(A)sync();addEventListener('online',()=>{setStat();sync()});addEventListener('offline',setStat);document.addEventListener('visibilitychange',()=>{if(!document.hidden){sync();if(navigator.serviceWorker)navigator.serviceWorker.getRegistration().then(r=>r&&r.update().catch(()=>{}))}});
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));navigator.serviceWorker.ready.then(r=>{ofS='ok';ofT();r.update().catch(()=>{})});setTimeout(()=>{if(ofS!='ok'){ofS='wait';ofT()}},5000)}else{ofS='no';ofT()}
 </script>
 </body>
 </html>

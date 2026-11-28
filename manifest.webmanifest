@@ -1,8 +1,8 @@
 {
- "name": "دفتر دخل و خرج",
- "short_name": "دفتر",
- "lang": "fa",
- "dir": "rtl",
+ "name": "dakhl",
+ "short_name": "dakhl",
+ "lang": "en",
+ "dir": "auto",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
